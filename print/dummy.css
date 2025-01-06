@@ -1,0 +1,103 @@
+@page{
+    size: A4;
+    margin: 0;
+}
+
+body{
+    height: 100vh;
+    margin: 0;
+    page-break-after: always;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+
+.container
+{
+    padding: 20px 15px;
+    max-width: 800px;
+    width: 100%;
+}
+
+.container .header{
+    line-height: 25px;
+    text-align: center;
+}
+
+.container .header h1
+{
+    font-size: 30px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.container .letter-con .text span
+{
+    margin-left: 50px;
+}
+
+.container .letter-con .from
+{
+    margin-bottom: 30px;
+}
+
+.container .letter-con .text{
+    line-height: 25px;
+    margin-bottom: 20px;
+}
+
+.container .letter-con .seal-con
+{
+    line-height: 25px;
+}
+
+.container .signature-con
+{
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container .signature-con div
+{
+    text-align: center;
+}
+
+.issued-con
+{
+    margin-top: 40px;
+    line-height: 40px;
+}
+
+.signature-con .issued-con
+{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+    @media (max-width: 600px) {
+        .container .signature-con
+        {
+            flex-direction: column;
+            gap: 20px   ;
+        }
+    }
+
+    @media print {
+        body {
+            height: auto;
+        }
+
+        .center {
+            display: block;
+        }
+
+        .container {
+            margin: 0 auto;
+            box-shadow: none;
+        }
+    }

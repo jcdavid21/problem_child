@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    @page{
+        size: A4;
+        margin-top: 100px;
+    }
+
+    body{
+        height: 100vh;
+        margin: 0;
+        page-break-after: always;
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    .center{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        margin-top: 20px;
+    }
+
+    .container
+    {
+        padding: 20px 15px;
+        max-width: 800px;
+        width: 100%;
+    }
+
+    .header
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header .logo-div img
+    {
+        width: 250px;
+        height: 250px;
+    }  
+
+    
+    @media print {
+        body {
+            height: auto;
+        }
+
+        .center {
+            display: block;
+        }
+
+        .container {
+            margin: 0 auto;
+            box-shadow: none;
+        }
+    }
+
+    
+
+    </style>
+    <title>Dummy</title>
+</head>
+<body>
+    <div class="center">
+        <div class="container">
+            <div class="header">
+                <div class="logo-div">
+                    <img src="../images/logo.png" alt="">
+                </div>
+                <div>
+                    <h1>PROBLEM CHILD</h1>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
