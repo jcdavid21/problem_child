@@ -36,12 +36,15 @@ shippingFeeByPostalCode.forEach(({ city, fee }) => {
 // Optional: Handle city selection to display detailed info
 const overAllTotal = document.getElementById('overAllTotal');
 
+
+
 citySelect.addEventListener('change', function () {
     const selectedCity = this.value;
     const selectedFeeData = shippingFeeByPostalCode.find(data => data.city === selectedCity);
     shippingFee.value = `₱${selectedFeeData.fee}`;
     shippingFeePrice = selectedFeeData.fee;
-    overAllTotal.value = `₱${(Number($('#subtotal').val().replace('₱', '')) + Number(selectedFeeData.fee)).toFixed(2)}`;
+    overAllTotal.value = `₱${Number($('#subtotal').val().replace('₱', '')) + selectedFeeData.fee}`;
+    console.log(subtotal);
 });
 
 $('.proceed-btn').click(function () {

@@ -523,6 +523,7 @@ if (!isset($_SESSION['user_id'])) {
                             </thead>
                             <tbody>
                                 <?php
+                                $total = 0;
                                 while ($data = $result->fetch_assoc()) {
                                     $subtotal = round($data["quantity"] * $data["price"], 2);
                                     $total += $subtotal;

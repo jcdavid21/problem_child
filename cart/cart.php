@@ -776,7 +776,7 @@ if (!isset($_SESSION['user_id'])) {
                         <label class="col-form-label">Send Your Payment Here:</label>
                         <img src="../images/qr/qr.jpeg" alt="" style="object-fit: contain; width: 100%; height: 100%;">
                     </div>
-                    <input type="hidden" id="subtotal" value="<?php echo $subtotal; ?>">
+                    <input type="hidden" id="subtotal" value="0">
                 </form>
             </div>
             
@@ -873,6 +873,7 @@ if (!isset($_SESSION['user_id'])) {
 
         // Calculate total price
         function updateTotalPrice() {
+            const subtotalInput = $('#subtotal').val();
             var totalPrice = 0;
             $('.cart-item').each(function () {
                 var cartId = $(this).data('id');
@@ -892,11 +893,17 @@ if (!isset($_SESSION['user_id'])) {
 
             $('#price2').text(totalPrice.toFixed(2));
             $('#overAllTotal').val('₱' + totalPrice.toFixed(2));
+            $('#subtotal').val(totalPrice.toFixed(2));
             subtotal = Number(totalPrice.toFixed(2));
         }
 
         // Initial total price calculation
         updateTotalPrice();
+
+        $('#exampleModal').on('hidden.bs.modal', function () {
+            $('#city').val(''); // Reset city dropdown
+            $('#shippingFee').val('₱0.00'); // Reset shipping fee
+        });
     });
 </script>
 
