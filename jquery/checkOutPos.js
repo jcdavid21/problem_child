@@ -18,7 +18,8 @@ $(document).ready(()=>{
                     total
                 },
                 success: function(response){
-                    if(response === 'success'){
+                    const data = JSON.parse(response);
+                    if(data.status === 'success'){
                         Swal.fire({
                             title: "Checked Out!",
                             text: "Order has been checked out.",
@@ -26,7 +27,7 @@ $(document).ready(()=>{
                             confirmButtonColor: "#3085d6",
                         }).then((result) => {
                             if (result) {
-                                window.location.reload();
+                                window.open(`./print.php?order_id=${data.order_id}`, '_blank');
                             }
                         })
                     }

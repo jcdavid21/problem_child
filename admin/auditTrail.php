@@ -48,7 +48,7 @@ require_once("../config/dbcon.php");
                             </ol>
 
                             <div class="card mb-5">
-                                <div class="card-body">
+                                <div class="table-responsive">
                                 <table id="productTable" class="table table-striped nowrap" style="width:100%">
                                     <thead>
                                     <tr>
@@ -61,7 +61,7 @@ require_once("../config/dbcon.php");
                                     </thead>
                                     <tbody>
                                     <?php
-                                        $query = "SELECT * FROM tbl_audit_trail";
+                                        $query = "SELECT * FROM tbl_audit_trail ORDER BY trail_date DESC";
                                         $stmt = $conn->prepare($query);
                                         $stmt->execute();
                                         $result = $stmt->get_result();
@@ -73,7 +73,7 @@ require_once("../config/dbcon.php");
                                         <td><?php echo $data['trail_username'];?></td>
                                         <td><?php echo $data['trail_activity'];?></td>
                                         <td><?php echo $data['trail_user_type'];?></td>
-                                        <td><?php echo $dateObject->format('F j, Y'); ?></td>
+                                        <td><?php echo $dateObject->format('F j, Y g:i A'); ?></td>
                                     </tr>
                                     <?php
                                         }

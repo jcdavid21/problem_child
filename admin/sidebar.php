@@ -1,4 +1,21 @@
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @media (max-width: 1000px){
+      .sidebar-offcanvas{
+        height: 100%;
+        padding-top: 50px;
+        top: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+<nav class="sidebar sidebar-offcanvas" id="sidebar" style="background-color: #FAE9D7;">
   <ul class="nav">
     <li class="nav-item">
       <a class="nav-link" href="./index.php">
@@ -43,13 +60,13 @@
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
         <i class="menu-icon mdi mdi-account-circle-outline"></i>
-        <span class="menu-title">Manage Accounts</span>
+        <span class="menu-title">Accounts</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="customers.php">Active</a></li>
-          <li class="nav-item">  <a class="nav-link" href="deactivated.php">Deactivated</a></li>
+          <!-- <li class="nav-item">  <a class="nav-link" href="deactivated.php">Deactivated</a></li> -->
           <!-- <li class="nav-item"> <a class="nav-link" href="createAccount.php">Create Account</a></li> -->
         </ul>
       </div>
@@ -99,6 +116,11 @@
                 <a class="nav-link" href="./tableDelivered.php">Delivered Orders</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="./POSales.php">
+                POS (Sales)
+              </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="./tableDeclined.php">Declined Orders</a>
             </li>
         </ul>
@@ -113,7 +135,7 @@
       </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item trans">
       <a class="nav-link" href="./transHistory.php">
         <i class="menu-icon mdi mdi-file-document"></i>
         <span class="menu-title">Transactions</span>
@@ -121,3 +143,5 @@
     </li>
   </ul>
 </nav>
+</body>
+</html>

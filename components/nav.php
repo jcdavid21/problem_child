@@ -16,6 +16,7 @@
             <li><a href="../sizechart/sizechart.php" class="active">Size</a></li>
             <li><a href="../contact/contact.php" class="active">Contact</a></li>
             <li><a href="../cart/cart.php" class="active">Cart</a></li>
+            <li><a href="../components/pendingOrders.php" class="active">My Purchases</a></li>
             <li><a href="../profile/profile.php" class="active">Profile</a></li>
             <li><a href="../logout/logout.php" class="active">Logout</a></li>
         </ul>

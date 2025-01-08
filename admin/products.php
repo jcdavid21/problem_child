@@ -78,6 +78,7 @@ require_once("../config/dbcon.php");
                                             </thead>
                                             <tbody>
                                                 <?php
+
                                                 if (isset($_GET['type'])) {
                                                     $prodId = intval($_GET["type"]);
                                                     $query = "SELECT * FROM product WHERE category_id = ? AND availability = 1";
@@ -88,7 +89,7 @@ require_once("../config/dbcon.php");
                                                     while ($data = $result->fetch_assoc()) {
                                                         $formatted_date = date("F j, Y", strtotime($data['uploaded_date']));
                                                 ?>
-                                                <tr class="product-row">
+                                                <tr>
                                                     <td>
                                                         <img src="../admin_panel/<?php echo $data['product_image']; ?>" alt="product" style="width: 100px; height: 100px;">
                                                     </td>
@@ -137,6 +138,8 @@ require_once("../config/dbcon.php");
                                                                             $stocksStmt->execute();
                                                                             $stocksResult = $stocksStmt->get_result();
                                                                             $stocksData = $stocksResult->fetch_assoc();
+
+                        
                                                                         ?>
                                                                         <input type="hidden" name="variation" class="variationSmall" value="<?php echo $stocksData["variation_id"]; ?>">
                                                                         <input type="number" class="form-control updatedSmallStock" value="<?php echo $stocksData["quantity_in_stock"]; ?>" >
@@ -151,6 +154,7 @@ require_once("../config/dbcon.php");
                                                                             $stocksStmt->execute();
                                                                             $stocksResult = $stocksStmt->get_result();
                                                                             $stocksData = $stocksResult->fetch_assoc();
+
                                                                         ?>
                                                                         <input type="hidden" name="variation" class="variationMedium" value="<?php echo $stocksData["variation_id"]; ?>">
                                                                         <input type="number" class="form-control updatedMediumStock" value="<?php echo $stocksData["quantity_in_stock"]; ?>" >
@@ -165,6 +169,8 @@ require_once("../config/dbcon.php");
                                                                             $stocksStmt->execute();
                                                                             $stocksResult = $stocksStmt->get_result();
                                                                             $stocksData = $stocksResult->fetch_assoc();
+
+                       
                                                                         ?>
                                                                         <input type="hidden" name="variation" class="variationLarge" value="<?php echo $stocksData["variation_id"]; ?>">
                                                                         <input type="number" class="form-control updatedLargeStock" value="<?php echo $stocksData["quantity_in_stock"]; ?>" >
@@ -179,6 +185,7 @@ require_once("../config/dbcon.php");
                                                                             $stocksStmt->execute();
                                                                             $stocksResult = $stocksStmt->get_result();
                                                                             $stocksData = $stocksResult->fetch_assoc();
+
                                                                         ?>
                                                                         <input type="hidden" name="variation" class="variationExtraLarge" value="<?php echo $stocksData["variation_id"]; ?>">
                                                                         <input type="number" class="form-control updatedExtraLargeStock" value="<?php echo $stocksData["quantity_in_stock"]; ?>" >
@@ -249,6 +256,46 @@ require_once("../config/dbcon.php");
                 }
             });
         });
+
+        $.ajax({
+    url: "./getLowStocks.php", // Adjust to your endpoint
+    method: "GET",
+    success: function(response) {
+        const lowStocks = JSON.parse(response);
+
+        if (lowStocks.length > 0) {
+            let lowStockText = "The following items are low in stock:<br><br>";
+
+            lowStocks.forEach(item => {
+                lowStockText += `- ${item.product_name} (${item.size_name}): ${item.quantity_in_stock} left<br>`;
+            });
+
+            Swal.fire({
+                title: "Low Stock Alert",
+                html: lowStockText,  // Use 'html' instead of 'text'
+                icon: "warning",
+                confirmButtonText: "OK"
+            });
+        } else {
+            Swal.fire({
+                title: "Stock Check",
+                text: "No items are low in stock.",
+                icon: "info",
+                confirmButtonText: "OK"
+            });
+        }
+    },
+    error: function() {
+        Swal.fire({
+            title: "Error",
+            text: "Failed to retrieve stock data.",
+            icon: "error",
+            confirmButtonText: "OK"
+        });
+    }
+});
+
+
     </script>
     
 </body>

@@ -73,11 +73,37 @@ require_once("../config/dbcon.php");
                                 <td><?php echo $data['size_name'];?></td>
 
                                 <td>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#receiptDetails<?php echo $data["fd_id"] ?>">
+                                    <i class="fa-solid fa-eye" style="color: #fcfcfc;"></i>
+                                    </button>
                                     <button type="button" class="btn btn-danger removeComment" id="<?php echo $data["fd_id"] ?>" >
                                     <i class="fa-solid fa-circle-xmark"  style="color: #fcfcfc;"></i>
                                     </button>
                                 </td>
                             </tr>
+                            <div class="modal fade" id="receiptDetails<?php echo $data["fd_id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                  <form method="post">
+                                    
+                                      <label class="col-form-label fw-bolder">Image Receipt:</label>
+                                      <div class="img-con" style="display: flex; justify-content: center;">
+                                        <textarea class="form-control" name="fd_comment" id="fd_comment" disabled><?php echo $data["fd_comment"] ?></textarea>
+                                      </div>
+                                    </div>
+                                      
+                                    </form>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary " value="<?php echo $data["receipt_id"]; ?>" data-bs-dismiss="modal">Close</button>
+                                  </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                             <?php
                                 }
                             ?>

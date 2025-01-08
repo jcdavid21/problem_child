@@ -33,6 +33,7 @@ $(document).ready(() => {
             return;
         }
 
+
         $.ajax({
             url: "../backend/admin/addCartPos.php",
             method: "post",

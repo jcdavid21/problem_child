@@ -66,7 +66,8 @@ require_once("../config/dbcon.php");
                           <?php
                             $query = "SELECT tr.*, CONCAT(td.first_name, ' ', td.last_name) as full_name, td.contact_no
                             FROM tbl_receipt tr
-                            INNER JOIN users td ON td.user_id = tr.user_id";
+                            INNER JOIN users td ON td.user_id = tr.user_id
+                            WHERE isAdmin = 0";
                             $stmt = $conn->prepare($query);
                             $stmt->execute();
                             $result = $stmt->get_result();
@@ -86,11 +87,11 @@ require_once("../config/dbcon.php");
                                   <i class="fa-solid fa-eye" style="color: #fcfcfc;"></i>
                                 </button>
                                 <!-- PRINT BUTTON -->
-                                <a href="./print.php?order_id=<?php echo $data["order_id"]; ?>" target="_blank">
+                                <!-- <a href="./print.php?order_id=<?php echo $data["order_id"]; ?>" target="_blank">
                                   <button type="button" class="btn btn-success" id="<?php echo $data["receipt_id"] ?>" >
                                     <i class="fa-solid fa-print" style="color: #fcfcfc;"></i>
                                   </button>
-                                </a>
+                                </a> -->
                             </td>
                           </tr>
                             <div class="modal fade" id="receiptDetails<?php echo $data["receipt_id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -105,10 +106,10 @@ require_once("../config/dbcon.php");
                                       <label class="col-form-label fw-bolder">Image Receipt:</label>
                                       <div class="img-con" style="display: flex; justify-content: center;">
                                         <?php 
-                                          if($data["receipt_img"] == null){
-                                            echo "<h4 class='text-center'>No image uploaded</h4>";
+                                          if($data["receipt_img"] != null || $data["receipt_img"] != "" || !empty($data["receipt_img"])){
+                                            echo "<img src='../backend/receipts/".$data["receipt_img"]."' class='img-fluid' alt='Receipt Image' >";
                                           }else{
-                                            echo "<img src='../images/receipts/".$data["receipt_img"]."' class='img-fluid' alt='Receipt Image' style='width: 200px; height: 200px;'>";
+                                            echo "<h4 class='text-center'>No image uploaded</h4>";
                                           }
                                         ?>
                                       </div>

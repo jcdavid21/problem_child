@@ -443,7 +443,35 @@ session_start();
             }
         }
 
-      
+        @media (max-width: 1000px) {
+            .w3-row-padding{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .w3-row-padding .w3-third{
+                width: 100%;
+            }
+
+            .body-title{
+                font-size: 35px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+           
+            .w3-row-padding .w3-third p{
+                font-size: 20px;
+            }
+
+            .body-title{
+                font-size: 20px;
+                padding: 20px;
+            }
+        }
     </style>
     <script src="https://kit.fontawesome.com/e8e1132798.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>

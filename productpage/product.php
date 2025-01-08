@@ -632,6 +632,15 @@ $variation_id = $variationRow['variation_id'];
                 width: 50%;
                 margin-bottom: 30px;
             }
+
+            .flex-con .name h4{
+                font-size: 16px;
+            }
+
+            .flex-con .comment{
+                font-size: 14px;
+                line-height: 20px;
+            }
         }
         @media(max-width: 574px){
             .footer-col{
@@ -658,6 +667,36 @@ $variation_id = $variationRow['variation_id'];
             }
         }
 
+        @media (max-width: 900px) {
+            #addToCartForm {
+                flex-direction: column;
+            }
+
+            .image_container .image_box{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .image_container {
+                width: 100%;
+                height: max-content;
+            }
+
+            .image_container1{
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr);
+                justify-content: space-between;
+            }
+
+            .image_container1 .image{
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+
+    
     
          
     </style>
@@ -744,63 +783,62 @@ $variation_id = $variationRow['variation_id'];
     </div>
 
     <!-- Reviews -->
-        <div class="testimonials">
-            <div class="test-con">
-                <div class="title-con">Reviews</div>
+    <div class="testimonials">
+        <div class="test-con">
+            <div class="title-con">Reviews</div>
 
-                <?php 
-                    $queryReview = "SELECT tf.*, CONCAT(tu.first_name, ' ', tu.last_name) as full_name, tu.picture_path, tp.product_name, ts.size_name FROM tbl_feedback tf
-                    INNER JOIN users tu ON tu.user_id = tf.user_id
-                    INNER JOIN product tp ON tp.product_id = tf.product_id
-                    INNER JOIN product_size_variation tpsv ON tpsv.variation_id = tf.variation_id
-                    INNER JOIN sizes ts ON ts.size_id = tpsv.size_id
-                    WHERE tf.product_id = $product_id";
-                    $resultReview = mysqli_query($conn, $queryReview);
+            <?php 
+                $queryReview = "SELECT tf.*, CONCAT(tu.first_name, ' ', tu.last_name) as full_name, tu.picture_path, tp.product_name, ts.size_name FROM tbl_feedback tf
+                INNER JOIN users tu ON tu.user_id = tf.user_id
+                INNER JOIN product tp ON tp.product_id = tf.product_id
+                INNER JOIN product_size_variation tpsv ON tpsv.variation_id = tf.variation_id
+                INNER JOIN sizes ts ON ts.size_id = tpsv.size_id
+                WHERE tf.product_id = $product_id";
+                $resultReview = mysqli_query($conn, $queryReview);
 
-                    if(mysqli_num_rows($resultReview) > 0){
-                        while($rowReview = mysqli_fetch_assoc($resultReview)){
-                            $formatted_date = date("F j, Y", strtotime($rowReview["fd_date"]));
-                ?>
+                if(mysqli_num_rows($resultReview) > 0){
+                    while($rowReview = mysqli_fetch_assoc($resultReview)){
+                        $formatted_date = date("F j, Y", strtotime($rowReview["fd_date"]));
+            ?>
 
-                <div class="flex-con">
-                    <div class="left">
-                        <img src="<?php echo $rowReview["picture_path"] ?>" alt="">
+            <div class="flex-con">
+                <div class="left">
+                    <img src="<?php echo $rowReview["picture_path"] ?>" alt="">
+                </div>
+                <div class="right">
+                    
+                    <div class="name">
+                        <h4>
+                            <?php echo $rowReview["full_name"] ?>
+                        </h4>
+                        <p>
+                            <?php echo $formatted_date ?>
+                        </p>
                     </div>
-                    <div class="right">
-                        
-                        <div class="name">
-                            <h4>
-                                <?php echo $rowReview["full_name"] ?>
-                            </h4>
-                            <p>
-                                <?php echo $formatted_date ?>
-                            </p>
-                        </div>
-                        <div class="item-name">
-                            <p >Item: 
-                                <?php echo $rowReview["product_name"] ?>
-                            </p>
-                            <p>Size: 
-                                <?php echo $rowReview["size_name"] ?>
-                            </p>
-                        </div>
-                        <div class="comment">
-                            <p>
-                                <?php echo $rowReview["fd_comment"] ?>
-                            </p>
-                        </div>
+                    <div class="item-name">
+                        <p >Item: 
+                            <?php echo $rowReview["product_name"] ?>
+                        </p>
+                        <p>Size: 
+                            <?php echo $rowReview["size_name"] ?>
+                        </p>
+                    </div>
+                    <div class="comment">
+                        <p>
+                            <?php echo $rowReview["fd_comment"] ?>
+                        </p>
                     </div>
                 </div>
-                <?php
-                        }
-                    }else{
-                        echo "<h4>No reviews yet</h4>";
-                    }
-                ?>
-                
             </div>
+            <?php
+                    }
+                }else{
+                    echo "<h4>No reviews yet</h4>";
+                }
+            ?>
+            
         </div>
-
+    </div>
 
     <script>
         document.querySelector(".minus-btn").setAttribute("disabled", "disabled");
@@ -991,14 +1029,26 @@ $variation_id = $variationRow['variation_id'];
     </footer>
     
     <script>
-        function showSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'flex'
+        function showSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'flex';
         }
-        function hideSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'none'
+
+        function hideSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'none';
         }
+
+        // Automatically close sidebar if width is 900px or more
+        function handleResize() {
+            const sidebar = document.querySelector('.sidebar');
+            if (window.innerWidth >= 900) {
+                sidebar.style.display = 'none';
+            }
+        }
+
+        // Add event listener for resize
+        window.addEventListener('resize', handleResize);
     </script>
 
     <script

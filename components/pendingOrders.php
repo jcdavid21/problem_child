@@ -513,6 +513,11 @@ if (!isset($_SESSION['user_id'])) {
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Subtotal</th>
+                                    <?php 
+                                        if($status_id[0] == 3 || $status_id[0] == 4){
+                                            echo "<th>J&T Tracking #</th>";
+                                        }
+                                    ?>
                                     <th>Status</th>
                                     <?php 
                                         if ($status_id[0] == 4) {
@@ -555,6 +560,20 @@ if (!isset($_SESSION['user_id'])) {
                                         </div>
                                     </td>
                                     <td class="total-price-js">₱<span class="subtotal-js"><?php echo number_format($subtotal, 2); ?></span></td>
+                                    <?php 
+                                        if($_GET["status_id"] == 3 || $_GET["status_id"] == 4){
+                                            $queryGetTrackingNumber = "SELECT tt.tracking_number FROM tbl_tracking_number tt INNER JOIN tbl_orders o ON tt.order_id = o.order_id WHERE o.cart_id = ?";
+                                            $stmtGetTrackingNumber = mysqli_prepare($conn, $queryGetTrackingNumber);
+                                            mysqli_stmt_bind_param($stmtGetTrackingNumber, 'i', $data['cart_id']);
+                                            mysqli_stmt_execute($stmtGetTrackingNumber);
+                                            $resultGetTrackingNumber = mysqli_stmt_get_result($stmtGetTrackingNumber);
+                                            $dataGetTrackingNumber = $resultGetTrackingNumber->fetch_assoc();
+                                            
+                                    ?>
+                                    <td>
+                                        <input type="text" style="width: 150px;" class="form-control tracking-number-js" value="<?php echo $dataGetTrackingNumber['tracking_number'] ?? ''; ?>" disabled>
+                                    </td>
+                                    <?php } ?>
                                     <?php
                                         $statusColor = [
                                             "Pending" => "orange",
@@ -687,14 +706,26 @@ if (!isset($_SESSION['user_id'])) {
     </footer> 
     
     <script>
-        function showSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'flex'
+        function showSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'flex';
         }
-        function hideSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'none'
+
+        function hideSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'none';
         }
+
+        // Automatically close sidebar if width is 900px or more
+        function handleResize() {
+            const sidebar = document.querySelector('.sidebar');
+            if (window.innerWidth >= 900) {
+                sidebar.style.display = 'none';
+            }
+        }
+
+        // Add event listener for resize
+        window.addEventListener('resize', handleResize);
     </script>
     <script src="https://unpkg.com/boxicons@2.1.3/dist/boxicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

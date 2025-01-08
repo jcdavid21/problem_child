@@ -372,6 +372,7 @@ mysqli_close($conn);
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            padding: 0 40px;
         }
         .profile-box{
             display: inline-block;
@@ -696,7 +697,58 @@ mysqli_close($conn);
             }
         }
 
-         
+        @media (max-width: 1000px) {
+            .profile-container{
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .myaccount{
+                height: max-content;
+                display: flex;
+                align-items: center;
+                gap: 50px;
+                justify-content: space-between;
+            }
+
+            .myaccount h3{
+                display: none;
+            }
+            
+            .profile-box1{
+                width: 100%;
+            }
+
+            .details-input{
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .details-input input{
+                margin: 0;
+                width: 100%;
+                margin-bottom: 40px;
+            }
+
+            .profile-box1 .flex-box .form-container{
+                padding: 40px;
+            }
+
+            .form-container .details-input, .form-container .profile-pic-container{
+                margin-left: 0;
+            }
+            
+            .profile-pic-container #profile-pic{
+                margin-left: 0;
+            }
+            
+        }
+
+        .change-password a p, .addresses a p, .profile a p{
+            margin-left: 0;
+            width: 100%;
+        }
     </style>
     <script src="https://kit.fontawesome.com/e8e1132798.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
@@ -855,14 +907,26 @@ mysqli_close($conn);
     </footer> 
     
     <script>
-        function showSidebar(){
+        function showSidebar() {
             const sidebar = document.querySelector('.sidebar');
-            sidebar.style.display = 'flex'
+            sidebar.style.display = 'flex';
         }
-        function hideSidebar(){
+
+        function hideSidebar() {
             const sidebar = document.querySelector('.sidebar');
-            sidebar.style.display = 'none'
+            sidebar.style.display = 'none';
         }
+
+        // Automatically close sidebar if width is 900px or more
+        function handleResize() {
+            const sidebar = document.querySelector('.sidebar');
+            if (window.innerWidth >= 900) {
+                sidebar.style.display = 'none';
+            }
+        }
+
+        // Add event listener for resize
+        window.addEventListener('resize', handleResize);
     </script>
     <script src="https://unpkg.com/boxicons@2.1.3/dist/boxicons.js"></script>
 </body>

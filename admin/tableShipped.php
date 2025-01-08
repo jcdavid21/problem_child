@@ -61,8 +61,8 @@ require_once("../config/dbcon.php");
                               <th>Account ID</th>
                               <th>Customer Name</th>
                               <th>Customer Contact</th>
-                              <th>Customer City</th>
                               <th>Customer Address</th>
+                              <th>Tracking Number</th>
                               <th>Shipping Fee</th>
                               <th>Status</th>
                               <th>Action</th>
@@ -73,20 +73,18 @@ require_once("../config/dbcon.php");
                           // First query to get the account details
                           $query = "SELECT 
                                     ta.user_id, 
-                                    CONCAT(ta.first_name, ' ', ta.last_name) AS full_name, 
                                     tr.status_name, 
                                     tr.status_id, 
-                                    od.address, 
-                                    od.city, 
-                                    od.contact, 
-                                    od.shipping_fee,
-                                    od.order_id
+                                    od.address_id, od.shipping_fee, od.order_id,
+                                    td.user_id, td.full_name, td.phone_number, td.address_region, td.postal_code, td.street_name, td.address_default, tt.tracking_number
                                 FROM users ta
                                 INNER JOIN cart tc ON tc.user_id = ta.user_id
                                 INNER JOIN tbl_orders o ON o.cart_id = tc.cart_id
                                 INNER JOIN tbl_order_details od ON o.order_id = od.order_id
+                                INNER JOIN addresses td ON td.address_id = od.address_id
                                 INNER JOIN tbl_order_status tr ON tc.status_id = tr.status_id
-                                WHERE tc.status_id = 3
+                                INNER JOIN tbl_tracking_number tt ON tt.order_id = o.order_id
+                                WHERE tc.status_id = 3 AND td.address_default = 1
                                 GROUP BY od.order_id";
                           $stmt = $conn->prepare($query);
                           $stmt->execute();
@@ -95,19 +93,19 @@ require_once("../config/dbcon.php");
                             $account_id = $data["user_id"];
                             $order_id = $data["order_id"];
                             $full_name = $data["full_name"];
-                            $address = $data["address"];
                             $status_name = $data["status_name"];
-                            $contact = $data["contact"];
+                            $contact = $data["phone_number"];
                             $status_id = $data["status_id"];
                             $shipping_fee = $data["shipping_fee"];
-                            $city = $data["city"];
+                            $address = $data["street_name"].", ".$data["address_region"];
+                            $tracking_number = $data["tracking_number"];
                           ?>
                           <tr>
                             <td><?php echo $account_id;?></td>
                             <td><?php echo $full_name;?></td>
                             <td><?php echo $contact;?></td>
-                            <td><?php echo $city; ?></td>
                             <td><?php echo $address; ?></td>
+                            <td><?php echo $tracking_number; ?></td>
                             <td>₱<?php echo $shipping_fee; ?></td>
                             <td>
                                 <?php 

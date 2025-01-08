@@ -22,10 +22,25 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="../assets/images/favicon.png" />
     <script src="../scripts/font-awesome.js"></script>
+    <style>
+      @media (max-width: 1000px) {
+        .navbar-brand-wrapper {
+          display: none !important;
+        }
+        .navbar-menu-wrapper {
+          display: none;
+        }
+        .navbar-toggler-right {
+          display: block;
+        }
+        
+      }
+    </style>
 </head>
 <body>
-<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
-  <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row"
+style="background-color: #FAE9D7;">
+  <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start" style="background-color: #FAE9D7;">
     <div class="me-3">
       <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
         <span class="icon-menu"></span>
@@ -35,12 +50,9 @@
       <a class="navbar-brand brand-logo" href="./index.php">
         Admin Panel
       </a>
-      <a class="navbar-brand brand-logo-mini" href="./index.php">
-        <img src="../images/logo.png" alt="logo" />
-      </a>
     </div>
   </div>
-  <div class="navbar-menu-wrapper d-flex align-items-top">
+  <div class="navbar-menu-wrapper d-flex align-items-top" style="background-color: #FAE9D7;">
     <ul class="navbar-nav">
       <li class="nav-item fw-semibold d-none d-lg-block ms-0">
         <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold" id="full_name">Admin Staff</span></h1>

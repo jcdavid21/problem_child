@@ -16,6 +16,7 @@ $(document).ready(()=>{
         const updatedLargeStock = modalContent.find('.updatedLargeStock').val();
         const updatedExtraLargeStock = modalContent.find('.updatedExtraLargeStock').val();
 
+
         //stocks must be greater than 0
         if(updatedSmallStock < 0 || updatedMediumStock < 0 || updatedLargeStock < 0 || updatedExtraLargeStock < 0){
             Swal.fire({
@@ -117,7 +118,7 @@ $(document).ready(()=>{
                     success: function(response){
                         if(response === "success"){
                             Swal.fire({
-                                title: "Deleted Product",
+                                title: "Product Disabled",
                                 text: "Product has been disabled.",
                                 
                             }).then((result)=>{

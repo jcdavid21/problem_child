@@ -18,6 +18,20 @@ require_once("../config/dbcon.php");
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Admin Panel</title>
+    <style>
+      .statistics-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+      @media (max-width: 1000px) {
+        .statistics-details {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+    </style>
     
   </head>
   <body class="with-welcome-text">
@@ -45,12 +59,12 @@ require_once("../config/dbcon.php");
                   <div class="tab-content tab-content-basic">
                     <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
                       <div class="row">
-                        <div class="col-sm-12">
-                          <div class="statistics-details d-flex align-items-center justify-content-between">
+                        <div class="col-sm-12 ">
+                          <div class="statistics-details" id="stat-section">
                             <div>
                             <?php
                                 $query5 = "SELECT 
-                                    SUM(c.price) + SUM(DISTINCT td.shipping_fee) AS total_sales
+                                    SUM(c.price) AS total_sales
                                 FROM 
                                     cart c
                                 INNER JOIN 
@@ -174,7 +188,7 @@ require_once("../config/dbcon.php");
                                       $monthlyBcRequest = mysqli_query($conn, 
                                       "SELECT 
                                           m.MonthName AS Month, 
-                                          IFNULL(SUM(tc.price) + SUM(DISTINCT td.shipping_fee), 0) AS serviceRequestBcCount, 
+                                          IFNULL(SUM(tc.price), 0) AS serviceRequestBcCount, 
                                           '$year' AS Year
                                       FROM 
                                           (SELECT 1 AS MonthNumber, 'January' AS MonthName UNION ALL

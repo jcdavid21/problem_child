@@ -10,13 +10,31 @@
         $prod_name = '';
         $user_id = $_POST["user_id"];
         $order_id = $_POST["order_id"];
-        
 
-        $query = "UPDATE cart SET status_id = ? WHERE status_id = ? AND user_id = ? ";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("iii", $status_id, $current_status, $user_id);
+        $selectOrders = "SELECT * FROM tbl_orders WHERE order_id = ?";
+        $stmt = $conn->prepare($selectOrders);
+        $stmt->bind_param("i", $order_id);
         $stmt->execute();
+        $result = $stmt->get_result();
 
+        if($result->num_rows > 0){
+            while($data = $result->fetch_assoc()){
+                $query = "UPDATE cart SET status_id = ? WHERE cart_id = ?";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param("ii", $status_id, $data["cart_id"]);
+                $stmt->execute();
+            }
+        }
+
+        if($status_id == 3){
+            $track_num = $_POST["tracking_number"];
+            $queryInsertTrackNum = "INSERT INTO tbl_tracking_number (tracking_number, order_id) VALUES (?, ?)";
+            $stmt = $conn->prepare($queryInsertTrackNum);
+            $stmt->bind_param("si", $track_num, $order_id);
+            $stmt->execute();
+            
+        }
+        
 
         $query2 = "SELECT CONCAT(first_name, ' ', last_name) as ac_username, isAdmin FROM users WHERE user_id=?";
         $stmt2 = $conn->prepare($query2);

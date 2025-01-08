@@ -27,7 +27,7 @@ if(isset($_POST["comment_id"])){
     
     $activity = "Deleted comment with ID: $comment_id";
     $type = "Admin";
-    if(!report($conn, $account_id, $username, $activity, $type)) {
+    if(!report($conn, $user_id, $username, $activity, $type)) {
         throw new Exception("Failed to log admin action.");
     }
 

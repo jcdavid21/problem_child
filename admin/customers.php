@@ -49,7 +49,7 @@ require_once("../config/dbcon.php");
                                 <th>Contact</th>
                                 <th>Email</th>
                                 <th>Date of Registered</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                             </tr>
                             </thead>
                             <tbody>
@@ -71,11 +71,11 @@ require_once("../config/dbcon.php");
                                 <td><?php echo $data['contact_no'] != null ? $data["contact_no"] : 'No contact # yet';?></td>
                                 <td><?php echo $data['email'];?></td>
                                 <td><?php echo $formattedDate;?></td>
-                                <td>
+                                <!-- <td>
                                     <button type="button" class="btn btn-danger deactivateResBtn" id="<?php echo $data["user_id"] ?>" >
                                     <i class="fa-solid fa-circle-xmark"  style="color: #fcfcfc;"></i>
                                     </button>
-                                </td>
+                                </td> -->
                             </tr>
                             <?php
                                 }

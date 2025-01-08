@@ -3,14 +3,12 @@
 session_start();
 require_once '../../config/dbcon.php';
 
-if(isset($_POST["refNumber"]) && isset($_POST["depositAmount"]) && isset($_POST["city"]) && isset($_POST["shippingFee"]) && isset($_POST["shippingAddress"]) && isset($_POST["contactNumber"]))
+if(isset($_POST["refNumber"]) && isset($_POST["depositAmount"]) && isset($_POST["shippingFee"]) && isset($_POST["address_id"]))
 {
     $refNumber = $_POST["refNumber"];
     $depositAmount = $_POST["depositAmount"];
-    $city = $_POST["city"];
+    $address_id = $_POST["address_id"];
     $shippingFee = $_POST["shippingFee"];
-    $shippingAddress = $_POST["shippingAddress"];
-    $contactNumber = $_POST["contactNumber"];
     $date = date("Y-m-d");
     $user_id = $_SESSION['user_id'];
 
@@ -61,9 +59,9 @@ if(isset($_POST["refNumber"]) && isset($_POST["depositAmount"]) && isset($_POST[
                 $stmt->close();
             }
             
-            $insertOrder = "INSERT INTO tbl_order_details (order_id, address, city, contact, shipping_fee) VALUES (?, ?, ?, ?, ?)";
+            $insertOrder = "INSERT INTO tbl_order_details (order_id, address_id, shipping_fee) VALUES (?, ?, ?)";
             $stmt = $conn->prepare($insertOrder);
-            $stmt->bind_param("issss", $lastId, $shippingAddress, $city, $contactNumber, $shippingFee);
+            $stmt->bind_param("iii", $lastId, $address_id, $shippingFee);
             $stmt->execute();
             $stmt->close();
 

@@ -471,6 +471,7 @@ session_start();
             .menu-button{
                 display: block;
             }
+
         }
         @media(max-width: 1170){
           .footer-col{
@@ -495,6 +496,7 @@ session_start();
             .sidebar{
                 width: 100%;
             }
+ 
             nav .name{
                 font-size: 28.5px;
             }
@@ -517,6 +519,12 @@ session_start();
         @media(max-width: 1460px){
             .el-wrapper{
                 width: 300px;
+            }
+        }
+
+        @media (min-width: 900px) {
+            .sidebar{
+                display: none;
             }
         }
 
@@ -815,7 +823,7 @@ session_start();
 
     $category_id = 2;
 
-    $query = "SELECT product_id, product_name, product_image, price FROM product WHERE category_id = ?";
+    $query = "SELECT product_id, product_name, product_image, price FROM product WHERE category_id = ? AND availability = 1";
     $stmt = mysqli_prepare($conn, $query);
 
     if ($stmt) {
@@ -932,14 +940,27 @@ session_start();
     </footer>
     
     <script>
-        function showSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'flex'
+        function showSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'flex';
         }
-        function hideSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'none'
+
+        function hideSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'none';
         }
+
+        // Automatically close sidebar if width is 900px or more
+        function handleResize() {
+            const sidebar = document.querySelector('.sidebar');
+            if (window.innerWidth >= 900) {
+                sidebar.style.display = 'none';
+            }
+        }
+
+        // Add event listener for resize
+        window.addEventListener('resize', handleResize);
+
     </script>
 </body>
 </html>

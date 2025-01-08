@@ -797,78 +797,61 @@ if ($stmt_select) {
             }
         }
 
+        @media (max-width: 1000px) {
+            .profile-container{
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .myaccount{
+                height: max-content;
+                display: flex;
+                align-items: center;
+                gap: 50px;
+                justify-content: space-between;
+            }
+
+            .myaccount h3{
+                display: none;
+            }
+            
+            .profile-box1{
+                width: 100%;
+            }
+
+            .details-input{
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .details-input input{
+                margin: 0;
+                width: 100%;
+                margin-bottom: 40px;
+            }
+
+            .profile-box1 .flex-box .form-container{
+                padding: 40px;
+            }
+
+            .form-container .details-input, .form-container .profile-pic-container{
+                margin-left: 0;
+            }
+            
+            .profile-pic-container #profile-pic{
+                margin-left: 0;
+            }
+            
+        }
+
          
     </style>
     <script src="https://kit.fontawesome.com/e8e1132798.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 </head>
      <!-- NAVIGATION BAR -->
-     <nav>
-        <ul class="sidebar">
-            
-            <li onclick=hideSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="30"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
-            <li>
-            <div class="box">
-            <input type="text" placeholder="Search...">
-            <a href="#"></a>
-            <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-            </li>
-            <li><a href="../index.php" class="active">Home</a></li>
-            <li><a href="../shop/shop.php" class="active" >Shop</a></li>
-            <li><a href="../sizechart/sizechart.php" class="active">Size</a></li>
-            <li><a href="../contact/contact.php" class="active">Contact</a></li>
-            <li><a href="../cart/cart.php" class="active">Cart</a></li>
-            <li><a href="../profile/profile.php" class="active">Profile</a></li>
-            <li><a href="../logout/logout.php" class="active">Logout</a></li>
-        </ul>
-        <ul>
-            
-            <li><a href="../index.php" class="name"><img class="logo" src="../images/logoR1.png">PROBLEM CHILD</a></li>
-            <li class="hideOnMobile"><a href="../index.php" class="active">Home</a></li>
-            <li class="hideOnMobile"><a href="../shop/shop.php" class="active" >Shop</a></li>
-            <li class="hideOnMobile"><a href="../sizechart/sizechart.php" class="active">Size</a></li>
-            <li class="hideOnMobile"><a href="../contact/contact.php" class="active">Contact</a></li>
-            <li class="hideOnMobile">
-            <div class="box">
-            <input type="text" placeholder="Search...">
-            <a href="#"></a>        
-            <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-            </li>
-            <li class="hideOnMobile">
-            <div class="cart1">
-                <a href="../cart/cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
-            </div>
-            </li>
-            </li>
-            <li class="hideOnMobile">
-            <div class="user">
-                <a href="../profile/profile.php"><i class="fa-regular fa-user"></i></a>
-                <!-- User menu -->
-                <div class="user-menu" style="<?php echo isset($_SESSION['user_id']) ? 'right: -5px;' : ''; ?>">
-                  <a href="../profile/profile.php">My Account</a>
-                  <a href="#">My Purchases</a>
-                  <a href="../logout/logout.php">Logout</a>
-                </div>
-            </div>
-            </li>
-            <li class="hideOnMobile">
-                <div class="login">
-                    <?php
-                        // Check if the user is logged in
-                        if(isset($_SESSION['user_id'])) {
-                            
-                        } else {
-                            // User is not logged in, display the login button
-                            echo '<a href="../login/login.php"><button class="button-74" role="button">Login</button></i></a>';
-                        }
-                    ?>
-                </div>
-            </li>
-            <li class="menu-button" onclick=showSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="30"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>
-        </ul>
-    </nav>
+     <?php include_once "../components/nav.php"  ?>
 
 
 
@@ -1130,14 +1113,26 @@ if ($stmt_select) {
     </footer> 
     
     <script>
-        function showSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'flex'
+        function showSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'flex';
         }
-        function hideSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'none'
+
+        function hideSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'none';
         }
+
+        // Automatically close sidebar if width is 900px or more
+        function handleResize() {
+            const sidebar = document.querySelector('.sidebar');
+            if (window.innerWidth >= 900) {
+                sidebar.style.display = 'none';
+            }
+        }
+
+        // Add event listener for resize
+        window.addEventListener('resize', handleResize);
     </script>
     <script src="https://unpkg.com/boxicons@2.1.3/dist/boxicons.js"></script>
 </body>

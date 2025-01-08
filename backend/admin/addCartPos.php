@@ -10,6 +10,7 @@
         $user_id = $_SESSION['user_id'];
         $check_box = 1;
         $status_id = 6;
+        
 
         $checkQuantity = "SELECT quantity_in_stock FROM product_size_variation WHERE variation_id = ?";
         $stmt = mysqli_prepare($conn, $checkQuantity);
@@ -25,17 +26,13 @@
         }
 
         $query = "INSERT INTO cart (user_id, variation_id, quantity, price, checkbox, status_id) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = mysqli_prepare($conn, $query);
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("iiidii", $user_id, $variation_id, $quantity, $total, $check_box, $status_id);
+        
+        if(!$stmt->execute()){
+            echo json_encode(['status' => 'error', 'message' => 'Failed to add item to cart']);
 
-        // Bind the parameter
-        mysqli_stmt_bind_param($stmt, "iiiiii", $user_id, $variation_id, $quantity, $total, $check_box, $status_id);
-
-        // Execute the statement
-        mysqli_stmt_execute($stmt);
-
-        // Check if the query was successful
-        if (!$stmt) {
-            die("Query failed: " . mysqli_error($conn));
+            exit;
         }
 
         echo json_encode(['status' => 'success', 'message' => 'Item added to cart']);

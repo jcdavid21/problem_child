@@ -7,11 +7,17 @@ if(isset($_SESSION["user_id"])){
     $user_id = $_SESSION['user_id'];
     $ref_number = mt_rand(1000000000000, 9999999999999);
     $depositAmount = $_POST["total"];
-    $city = "Quezon City";
     $shippingFee = 0;
-    $shippingAddress = "At Problem Child Store";
-    $contactNumber = "09565535401";
     $date = date("Y-m-d");
+
+    $queryAddress = "SELECT * FROM addresses WHERE user_id = ? AND address_default = 1";
+    $stmtAddress = $conn->prepare($queryAddress);
+    $stmtAddress->bind_param("i", $user_id);
+    $stmtAddress->execute();
+    $resultAddress = $stmtAddress->get_result();
+    $rowAddress = $resultAddress->fetch_assoc();
+
+    $address_id = $rowAddress["address_id"];
 
     $selectOrderId = "SELECT MAX(order_id) as lastId FROM tbl_orders";
     $result = $conn->query($selectOrderId);
@@ -47,11 +53,10 @@ if(isset($_SESSION["user_id"])){
         $stmt->execute();
     }
 
-    $insertOrder = "INSERT INTO tbl_order_details (order_id, address, city, contact, shipping_fee) VALUES (?, ?, ?, ?, ?)";
+    $insertOrder = "INSERT INTO tbl_order_details (order_id, address_id, shipping_fee) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($insertOrder);
-    $stmt->bind_param("issss", $lastId, $shippingAddress, $city, $contactNumber, $shippingFee);
+    $stmt->bind_param("iii", $lastId, $address_id, $shippingFee);
     $stmt->execute();
-    $stmt->close();
 
     $insertPayment = "INSERT INTO tbl_receipt (user_id, order_id, receipt_number, deposit_amount, uploaded_date) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($insertPayment);
@@ -79,7 +84,14 @@ if(isset($_SESSION["user_id"])){
         exit();
     }
 
-    echo "success";
+    $user_id_type = 1;
+    $queryTrans = "INSERT INTO tbl_transactions (user_id, user_name, user_type, user_activity, activity_date, item_id) VALUES (?, ?, ?, ?, ?, ?)";
+    $stmtTrans = $conn->prepare($queryTrans);
+    $stmtTrans->bind_param("issssi", $user_id, $username, $user_id_type, $activity, $date, $lastId);
+    $stmtTrans->execute();
+
+
+    echo json_encode(['status' => 'success', 'order_id' => $lastId]);
 }
 
 ?>

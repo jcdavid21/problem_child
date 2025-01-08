@@ -630,6 +630,37 @@ if (!isset($_SESSION['user_id'])) {
             }
         }
 
+        @media (max-width: 700px) {
+            .product_data{
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                row-gap: 20px;
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .total-price1{
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .total-price1 .price2, .total-price1 .price1{
+                margin-top: 0;
+            }
+
+            .total-price1 p{
+                margin: 0;
+            }
+
+            .item-remove{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
          
     </style>
     <script src="https://kit.fontawesome.com/e8e1132798.js" crossorigin="anonymous"></script>
@@ -684,7 +715,7 @@ if (!isset($_SESSION['user_id'])) {
                         <div class="total1" style="text-align: center;">Total:</div>
                         <div class="price2" id="price<?php echo $citem['cart_id']; ?>">
                             <p>&#8369;</p>
-                            <p class="price"><?php echo $citem['price'] * $citem['quantity']; ?></p>
+                            <p class="price"><?php echo number_format($citem['price'] * $citem['quantity'], 2); ?></p>
                         </div>
                     </div>
                     <div class="item-remove">
@@ -728,20 +759,45 @@ if (!isset($_SESSION['user_id'])) {
                     <input type="text" disabled id="overAllTotal" class="font-weight-bold" value="₱0.00">
                 </div>
 
+                    <?php 
+                        $queryData = "SELECT * FROM addresses WHERE user_id = ? AND address_default = 1";
+                        $stmtData = mysqli_stmt_init($conn);
+                        if (!mysqli_stmt_prepare($stmtData, $queryData)) {
+                            echo "SQL Error";
+                        } else {
+                            mysqli_stmt_bind_param($stmtData, "i", $_SESSION['user_id']);
+                            mysqli_stmt_execute($stmtData);
+                            $resultData = mysqli_stmt_get_result($stmtData);
+                            $row = mysqli_fetch_assoc($resultData);
+                        }
+                    ?>
+
                     <div class="mb-3">
                         
                         <div class="d-flex " style="gap: 12px;"> 
                             <div>
-                                <label for="">City</label>
-                                <select class="form-control " name="city" id="city">
-                                    <option value="" selected disabled>Select your city</option>
-                                </select>
+                                <label for="">Postal Code</label>
+                                <input type="text" disabled id="postalCode" class="font-weight-bold form-control" value="<?php echo !empty($row['postal_code']) ? $row['postal_code'] : 'None'; ?>">
                             </div>
                             <div>
                                 <label for="">Shipping Fee</label>
                                 <input type="text" disabled id="shippingFee" class="font-weight-bold form-control " value="₱0.00">
                             </div>
                         </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-form-label">Address:</label>
+                        <input type="text" class="form-control" id="address" 
+                        value="<?php echo (!empty($row['street_name']) || !empty($row['address_region'])) 
+                            ? trim($row['street_name'] . ' ' . $row['address_region']) 
+                            : 'None'; ?>" disabled>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-form-label">Contact Number:</label>
+                        <input type="text" class="form-control" id="contactNumber" 
+                        value="<?php echo !empty($row['phone_number']) ? $row['phone_number'] : 'None'; ?>" disabled>
                     </div>
 
                     <div class="form-group">
@@ -760,23 +816,14 @@ if (!isset($_SESSION['user_id'])) {
                         placeholder="Enter the amount you deposited">
                     </div>
 
-                    <div class="mb-3">
-                        <label class="col-form-label">Shipping Address:</label>
-                        <input type="text" class="form-control" id="shippingAddress" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, '');"
-                        placeholder="Enter your shipping address">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="col-form-label">Contact Number:</label>
-                        <input type="text" class="form-control" id="contactNumber" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-                        placeholder="Enter your contact number" maxlength="11">
-                    </div>
 
                     <div class="img-con" style="height: 350px; padding-bottom: 20px;">
                         <label class="col-form-label">Send Your Payment Here:</label>
                         <img src="../images/qr/qr.jpeg" alt="" style="object-fit: contain; width: 100%; height: 100%;">
                     </div>
-                    <input type="hidden" id="subtotal" value="0">
+
+                    <input type="hidden" id="subtotal" value="<?php echo $subtotal; ?>">
+                    <input type="hidden" id="address_id" value="<?php echo $row['address_id']; ?>">
                 </form>
             </div>
             
@@ -793,117 +840,7 @@ if (!isset($_SESSION['user_id'])) {
 
 <script>
     $(document).ready(function () {
-        // Update checkbox status via AJAX
-        let subtotal = 0;
-        $('.checkbox').on('change', function () {
-            var cartId = $(this).data('id');
-            var isChecked = $(this).prop('checked') ? 1 : 0;
-
-            $.ajax({
-                url: 'update_checkbox.php',
-                method: 'POST',
-                data: { cartId: cartId, isChecked: isChecked },
-                success: function (response) {
-                    updateTotalPrice();
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error updating checkbox:", error);
-                }
-            });
-        });
-
-        // Update quantity and price via AJAX
-        $('.updateQuantity').on('click', function () {
-            var cartId = $(this).closest('.cart-item').data('id');
-            var action = $(this).data('action');
-            var quantityInput = $(this).siblings('.quantity');
-            var quantity = parseInt(quantityInput.val());
-
-            if (action === 'increase') {
-                quantity++;
-            } else if (action === 'decrease' && quantity > 1) {
-                quantity--;
-            }
-
-            quantityInput.val(quantity);
-
-            $.ajax({
-                url: 'update_quantity.php',
-                method: 'POST',
-                data: { cartId: cartId, quantity: quantity },
-                success: function (response) {
-                    try {
-                        const responseData = JSON.parse(response);
-                        var newTotalPrice = parseFloat(responseData.newPrice);
-
-                        if (!isNaN(newTotalPrice)) {
-                            $('#price' + cartId + ' .price').text(newTotalPrice.toFixed(2));
-                            updateTotalPrice();
-                        } else {
-                            console.error("Invalid newPrice in response:", response);
-                        }
-                    } catch (e) {
-                        console.error("Error parsing JSON:", e, response);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error updating quantity:", error);
-                }
-            });
-        });
-
-        // Remove item from the cart
-        $('.remove-btn').on('click', function (e) {
-            e.preventDefault();
-            var cartId = $(this).closest('.cart-item').data('id');
-
-            $.ajax({
-                url: 'remove_from_cart.php',
-                method: 'POST',
-                data: { cartId: cartId },
-                success: function () {
-                    $('#cart-items-container .cart-item[data-id="' + cartId + '"]').remove();
-                    updateTotalPrice();
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error removing item:", error);
-                }
-            });
-        });
-
-        // Calculate total price
-        function updateTotalPrice() {
-            const subtotalInput = $('#subtotal').val();
-            var totalPrice = 0;
-            $('.cart-item').each(function () {
-                var cartId = $(this).data('id');
-                var isChecked = $('.checkbox[data-id="' + cartId + '"]').prop('checked');
-
-                if (isChecked) {
-                    var priceElement = $('#price' + cartId + ' .price');
-                    var itemPrice = parseFloat(priceElement.text());
-
-                    if (!isNaN(itemPrice)) {
-                        totalPrice += itemPrice;
-                    } else {
-                        console.error(`Invalid price for cartId ${cartId}`);
-                    }
-                }
-            });
-
-            $('#price2').text(totalPrice.toFixed(2));
-            $('#overAllTotal').val('₱' + totalPrice.toFixed(2));
-            $('#subtotal').val(totalPrice.toFixed(2));
-            subtotal = Number(totalPrice.toFixed(2));
-        }
-
-        // Initial total price calculation
-        updateTotalPrice();
-
-        $('#exampleModal').on('hidden.bs.modal', function () {
-            $('#city').val(''); // Reset city dropdown
-            $('#shippingFee').val('₱0.00'); // Reset shipping fee
-        });
+        
     });
 </script>
 
@@ -950,14 +887,26 @@ if (!isset($_SESSION['user_id'])) {
     </footer> 
     
     <script>
-        function showSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'flex'
+        function showSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'flex';
         }
-        function hideSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'none'
+
+        function hideSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'none';
         }
+
+        // Automatically close sidebar if width is 900px or more
+        function handleResize() {
+            const sidebar = document.querySelector('.sidebar');
+            if (window.innerWidth >= 900) {
+                sidebar.style.display = 'none';
+            }
+        }
+
+        // Add event listener for resize
+        window.addEventListener('resize', handleResize);
     </script>
     <script src="../js/cart.js"></script>
     <script src="https://unpkg.com/boxicons@2.1.3/dist/boxicons.js"></script>

@@ -51,7 +51,7 @@ require_once("../config/dbcon.php");
                   <div class="card mb-5">
                     <div class="card-header bg-success pt-3">
                         <div class="text-center">
-                            <p class="card-title text-white">Delivered Orders
+                            <p class="card-title text-white">POS Orders
                         </div>
                     </div>
                     <div class="card-body">
@@ -59,12 +59,9 @@ require_once("../config/dbcon.php");
                         <thead>
                           <tr>
                               <th>Account ID</th>
-                              <th>Customer Name</th>
-                              <th>Customer Contact</th>
-                              <th>Customer Address</th>
-                              <th>Tracking Number</th>
-                              <th>Shipping Fee</th>
-                              <th>Status</th>
+                              <th>Admin Name</th>
+                              <th>Admin Contact</th>
+                              <th>Admin Address</th>
                               <th>Action</th>
                           </tr>
                         </thead>
@@ -76,15 +73,14 @@ require_once("../config/dbcon.php");
                                     tr.status_name, 
                                     tr.status_id, 
                                     od.address_id, od.shipping_fee, od.order_id,
-                                    td.user_id, td.full_name, td.phone_number, td.address_region, td.postal_code, td.street_name, td.address_default, tt.tracking_number
+                                    td.user_id, td.full_name, td.phone_number, td.address_region, td.postal_code, td.street_name, td.address_default
                                 FROM users ta
                                 INNER JOIN cart tc ON tc.user_id = ta.user_id
                                 INNER JOIN tbl_orders o ON o.cart_id = tc.cart_id
                                 INNER JOIN tbl_order_details od ON o.order_id = od.order_id
                                 INNER JOIN addresses td ON td.address_id = od.address_id
                                 INNER JOIN tbl_order_status tr ON tc.status_id = tr.status_id
-                                INNER JOIN tbl_tracking_number tt ON tt.order_id = o.order_id
-                                WHERE tc.status_id = 4 AND td.address_default = 1
+                                WHERE tc.status_id = 4 AND td.address_default = 1 AND ta.isAdmin = 1
                                 GROUP BY od.order_id";
                           $stmt = $conn->prepare($query);
                           $stmt->execute();
@@ -98,27 +94,22 @@ require_once("../config/dbcon.php");
                             $status_id = $data["status_id"];
                             $shipping_fee = $data["shipping_fee"];
                             $address = $data["street_name"].", ".$data["address_region"];
-                            $tracking_number = $data["tracking_number"];
                           ?>
                           <tr>
-                            <td><?php echo $account_id;?></td>
+                          <td><?php echo $account_id;?></td>
                             <td><?php echo $full_name;?></td>
                             <td><?php echo $contact;?></td>
                             <td><?php echo $address; ?></td>
-                            <td><?php echo $tracking_number; ?></td>
-                            <td>₱<?php echo $shipping_fee; ?></td>
-                            <td>
-                                <?php 
-                                    if($status_id == 4){
-                                        echo "<span class='badge text-success fw-bold'>$status_name</span>";
-                                    }
-                                ?>
-                            </td>
                             <td>
                               <button type="button" class="btn btn-primary" data-bs-toggle="modal" 
                               data-bs-target="#residenceAccountDetails<?php echo $order_id; ?>" data-bs-whatever="@getbootstrap">
                                 <i class="fa-solid fa-eye" style="color: #fcfcfc;"></i>
                               </button>
+                              <a href="./print.php?order_id=<?php echo $data["order_id"]; ?>" target="_blank">
+                                  <button type="button" class="btn btn-success" id="<?php echo $data["receipt_id"] ?>" >
+                                    <i class="fa-solid fa-print" style="color: #fcfcfc;"></i>
+                                  </button>
+                                </a>
                             </td>
                           </tr>
 

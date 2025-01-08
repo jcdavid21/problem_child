@@ -4,7 +4,7 @@ include_once "config/dbcon.php";
 
 $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 
-$query = "SELECT * FROM product WHERE product_name LIKE ?";
+$query = "SELECT * FROM product WHERE product_name LIKE ? AND availability = 1";
 $stmt = $conn->prepare($query);
 $searchParam = "%$searchQuery%";
 $stmt->bind_param("s", $searchParam);
@@ -841,6 +841,7 @@ $result = $stmt->get_result();
             <li><a href="sizechart/sizechart.php" class="active">Size</a></li>
             <li><a href="contact/contact.php" class="active">Contact</a></li>
             <li><a href="cart/cart.php" class="active">Cart</a></li>
+            <li><a href="./components/pendingOrders.php" class="active">My Purchases</a></li>
             <li><a href="profile/profile.php" class="active">Profile</a></li>
             <li><a href="logout/logout.php" class="active">Logout</a></li>
         </ul>
@@ -1040,14 +1041,26 @@ $result = $stmt->get_result();
     </footer>
     
     <script>
-        function showSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'flex'
+        function showSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'flex';
         }
-        function hideSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'none'
+
+        function hideSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'none';
         }
+
+        // Automatically close sidebar if width is 900px or more
+        function handleResize() {
+            const sidebar = document.querySelector('.sidebar');
+            if (window.innerWidth >= 900) {
+                sidebar.style.display = 'none';
+            }
+        }
+
+        // Add event listener for resize
+        window.addEventListener('resize', handleResize);
     </script>
     <script>
         // Add event listener for desktop search form

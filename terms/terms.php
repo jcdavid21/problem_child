@@ -481,6 +481,12 @@ session_start();
         <p>These Terms of Use shall be governed by and construed in accordance with the laws of [Your State], without giving effect to principles of conflict of law. 
             Any disputes related to these Terms or your access to or use of our website will be subject to the exclusive jurisdiction of the state and federal courts in Philippines.</p>     
 
+        <h4 style="font-size: large;"><br>No Refund Once Order Placed</h4>
+        <p>
+            Once the order is placed, it cannot be canceled or refunded. Please make sure to double-check your order before placing it. 
+        </p>
+
+
         <h4 style="font-size: large;"><br>Modifications</h4>
         <p>We reserve the right to modify these Terms of Use at any time without notice. Please review these Terms of Use periodically for changes. 
             Your continued access or use of our website or products indicates your acceptance of the modified Terms.</p>    
@@ -489,6 +495,7 @@ session_start();
         <p>We reserve the right to modify these Terms of Use at any time without notice. Please review these Terms of Use periodically for changes. 
             Your continued access or use of our website or products indicates your acceptance of the modified Terms.</p>
         </div>
+        
     </div>
 
     <!-- FOOTER -->
@@ -532,14 +539,26 @@ session_start();
     </footer>
     
     <script>
-        function showSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'flex'
+        function showSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'flex';
         }
-        function hideSidebar(){
-            const sidebar = document.querySelector('.sidebar')
-            sidebar.style.display = 'none'
+
+        function hideSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.display = 'none';
         }
+
+        // Automatically close sidebar if width is 900px or more
+        function handleResize() {
+            const sidebar = document.querySelector('.sidebar');
+            if (window.innerWidth >= 900) {
+                sidebar.style.display = 'none';
+            }
+        }
+
+        // Add event listener for resize
+        window.addEventListener('resize', handleResize);
     </script>
 </body>
 </html>

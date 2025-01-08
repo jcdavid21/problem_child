@@ -2,7 +2,7 @@
 include_once "config/dbcon.php";
 $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 
-$query = "SELECT * FROM product WHERE product_name LIKE ?";
+$query = "SELECT * FROM product WHERE product_name LIKE ? AND availability = 1";
 $stmt = $conn->prepare($query);
 $searchParam = "%$searchQuery%";
 $stmt->bind_param("s", $searchParam);

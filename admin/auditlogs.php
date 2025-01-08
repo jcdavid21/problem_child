@@ -42,7 +42,7 @@ require_once("../config/dbcon.php");
                     <!-- <button style="display: flex; width:max-content; margin: 4px;
                     color:white;" class="btn bg-danger" id="delete-logs">
                       Delete Logs</button> -->
-                    <div class="card-body">
+                    <div class="table-responsive">
                       <table id="productTable" class="table table-striped nowrap" style="width:100%">
                         <thead>
                           <tr>
@@ -54,7 +54,7 @@ require_once("../config/dbcon.php");
                         </thead>
                         <tbody>
                           <?php
-                            $query = "SELECT * FROM tbl_audit_log";
+                            $query = "SELECT * FROM tbl_audit_log ORDER BY log_date DESC";
                             $stmt = $conn->prepare($query);
                             $stmt->execute();
                             $result = $stmt->get_result();
@@ -65,7 +65,7 @@ require_once("../config/dbcon.php");
                             <td><?php echo $data['log_user_id'];?></td>
                             <td><?php echo $data['log_username'];?></td>
                             <td><?php echo $data['log_user_type'] == 1 ? 'Admin' : 'Customer';?></td>
-                            <td><?php echo $dateObject->format('F j, Y'); ?></td>
+                            <td><?php echo $dateObject->format('F j, Y g:i A'); ?></td>
                           </tr>
                           <?php
                             }

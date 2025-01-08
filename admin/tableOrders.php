@@ -22,6 +22,8 @@ require_once("../config/dbcon.php");
     <link href="../plugins/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <link href="../plugins/responsive.bootstrap5.min.css" rel="stylesheet" />
     <script src="../scripts/sweetalert2.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <script
       src="../scripts/font-awesome.js"
       crossorigin="anonymous"
@@ -61,7 +63,6 @@ require_once("../config/dbcon.php");
                               <th>Account ID</th>
                               <th>Customer Name</th>
                               <th>Customer Contact</th>
-                              <th>Customer City</th>
                               <th>Customer Address</th>
                               <th>Shipping Fee</th>
                               <th>Status</th>
@@ -73,20 +74,17 @@ require_once("../config/dbcon.php");
                           // First query to get the account details
                           $query = "SELECT 
                                     ta.user_id, 
-                                    CONCAT(ta.first_name, ' ', ta.last_name) AS full_name, 
                                     tr.status_name, 
                                     tr.status_id, 
-                                    od.address, 
-                                    od.city, 
-                                    od.contact, 
-                                    od.shipping_fee,
-                                    od.order_id
+                                    od.address_id, od.shipping_fee, od.order_id,
+                                    td.user_id, td.full_name, td.phone_number, td.address_region, td.postal_code, td.street_name, td.address_default
                                 FROM users ta
                                 INNER JOIN cart tc ON tc.user_id = ta.user_id
                                 INNER JOIN tbl_orders o ON o.cart_id = tc.cart_id
                                 INNER JOIN tbl_order_details od ON o.order_id = od.order_id
+                                INNER JOIN addresses td ON td.address_id = od.address_id
                                 INNER JOIN tbl_order_status tr ON tc.status_id = tr.status_id
-                                WHERE tc.status_id = 1
+                                WHERE tc.status_id = 1 AND td.address_default = 1
                                 GROUP BY od.order_id";
                           $stmt = $conn->prepare($query);
                           $stmt->execute();
@@ -95,18 +93,16 @@ require_once("../config/dbcon.php");
                             $account_id = $data["user_id"];
                             $order_id = $data["order_id"];
                             $full_name = $data["full_name"];
-                            $address = $data["address"];
                             $status_name = $data["status_name"];
-                            $contact = $data["contact"];
+                            $contact = $data["phone_number"];
                             $status_id = $data["status_id"];
                             $shipping_fee = $data["shipping_fee"];
-                            $city = $data["city"];
+                            $address = $data["street_name"].", ".$data["address_region"];
                           ?>
                           <tr>
                             <td><?php echo $account_id;?></td>
                             <td><?php echo $full_name;?></td>
                             <td><?php echo $contact;?></td>
-                            <td><?php echo $city; ?></td>
                             <td><?php echo $address; ?></td>
                             <td>₱<?php echo $shipping_fee; ?></td>
                             <td>
@@ -237,7 +233,6 @@ require_once("../config/dbcon.php");
                               <th>Account ID</th>
                               <th>Customer Name</th>
                               <th>Customer Contact</th>
-                              <th>Customer City</th>
                               <th>Customer Address</th>
                               <th>Shipping Fee</th>
                               <th>Status</th>
@@ -249,20 +244,17 @@ require_once("../config/dbcon.php");
                           // First query to get the account details
                           $query = "SELECT 
                                     ta.user_id, 
-                                    CONCAT(ta.first_name, ' ', ta.last_name) AS full_name, 
                                     tr.status_name, 
                                     tr.status_id, 
-                                    od.address, 
-                                    od.city, 
-                                    od.contact, 
-                                    od.shipping_fee,
-                                    od.order_id
+                                    od.address_id, od.shipping_fee, od.order_id,
+                                    td.user_id, td.full_name, td.phone_number, td.address_region, td.postal_code, td.street_name, td.address_default
                                 FROM users ta
                                 INNER JOIN cart tc ON tc.user_id = ta.user_id
                                 INNER JOIN tbl_orders o ON o.cart_id = tc.cart_id
                                 INNER JOIN tbl_order_details od ON o.order_id = od.order_id
+                                INNER JOIN addresses td ON td.address_id = od.address_id
                                 INNER JOIN tbl_order_status tr ON tc.status_id = tr.status_id
-                                WHERE tc.status_id = 2
+                                WHERE tc.status_id = 2 AND td.address_default = 1
                                 GROUP BY od.order_id";
                           $stmt = $conn->prepare($query);
                           $stmt->execute();
@@ -271,18 +263,16 @@ require_once("../config/dbcon.php");
                             $account_id = $data["user_id"];
                             $order_id = $data["order_id"];
                             $full_name = $data["full_name"];
-                            $address = $data["address"];
                             $status_name = $data["status_name"];
-                            $contact = $data["contact"];
+                            $contact = $data["phone_number"];
                             $status_id = $data["status_id"];
                             $shipping_fee = $data["shipping_fee"];
-                            $city = $data["city"];
+                            $address = $data["street_name"].", ".$data["address_region"];
                           ?>
                           <tr>
                             <td><?php echo $account_id;?></td>
                             <td><?php echo $full_name;?></td>
                             <td><?php echo $contact;?></td>
-                            <td><?php echo $city; ?></td>
                             <td><?php echo $address; ?></td>
                             <td>₱<?php echo $shipping_fee; ?></td>
                             <td>
@@ -310,6 +300,11 @@ require_once("../config/dbcon.php");
                                 </div>
                                 <div class="modal-body row">
                                   <form method="post">
+                                    <div class="mb-3 col-md-12">
+                                      <label for="tracking_number">J&T Tracking Number</label>
+                                      <input type="text" class="form-control" id="tracking_number" class="tracking_number"  name="tracking_number"
+                                      placeholder="Input J&T Tracking number" required>
+                                    </div>
                                     <?php
                                     // Fetch order details for the specific account
                                     $query_orders = "SELECT tc.cart_id, tc.quantity, tc.price, tv.size_id, tp.product_id, tp.product_name, tp.product_image, tp.price as prod_price, ca.category_name, o.order_id, ts.size_name FROM cart tc

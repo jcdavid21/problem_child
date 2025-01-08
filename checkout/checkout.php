@@ -766,7 +766,7 @@ if (!isset($_SESSION['user_id'])) {
         // Assuming you have included jQuery
         $.ajax({
             type: 'POST',
-            url: '../update_orders.php'
+            url: '../update_orders.php',
             data: {
                 delivered_to: addressInfo.full_name,
                 phone_no: addressInfo.phone_number,
