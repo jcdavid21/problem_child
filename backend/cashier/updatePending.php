@@ -46,7 +46,9 @@
             $data = $result->fetch_assoc();
             $user_name = $data["ac_username"];
             $role_id = $data["isAdmin"];
-            $current_date = date('Y-m-d');
+            date_default_timezone_set("Asia/Manila");
+            
+            $current_date = date('Y-m-d H:i:s');
             $activity = '';
             if($status_id == 2){
                 $activity = "Claimed items";

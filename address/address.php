@@ -790,6 +790,22 @@ if ($stmt_select) {
             .logo2 img{
                 margin-left: 80px;
             }
+
+            .profile-container .myaccount{
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+
+            .my-addresses button{
+                font-size: 12px;
+                width: 120px;
+                padding: 6px;
+            }
+
+            .details .default-btn{
+                width: 100px;
+                height: 30px;
+            }
         }
         @media(max-width: 399px){
             nav .name{
@@ -807,8 +823,13 @@ if ($stmt_select) {
                 height: max-content;
                 display: flex;
                 align-items: center;
-                gap: 50px;
+                gap: 20px;
                 justify-content: space-between;
+                margin: 0;
+            }
+
+            .profile-container .profile-box{
+                margin: 0;
             }
 
             .myaccount h3{
@@ -1073,44 +1094,7 @@ if ($stmt_select) {
 
 
     <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container1">
-            <div class="row1">
-                <div class="logo2">
-                    <a href="home.php"><img  src="../picture/icon/logo1.png" alt=""></a>
-                </div>
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="../index.php">Home</a></li>
-                        <li><a href="../shop/shop.php">Shop</a></li>
-                        <li><a href="../sizechart/sizechart.php">Size Chart</a></li>
-                        <li><a href="../contact/contact.php">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Get Help</h4>
-                    <ul>
-                        <li><a href="../faq/faq.php">FAQ</a></li>
-                        <li><a href="../about/about.php">About Us</a></li>
-                        <li><a href="../privacypolicy/privacypolicy.php">Privacy Policy</a></li>
-                        <li><a href="../terms/terms.php">Terms & Conditions</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Follow Us</h4>
-                    <div class="social-links">
-                        <a href="https://www.facebook.com/thePrblmChld"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://twitter.com/problemchildswc"><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.instagram.com/problemchild.swc"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <p>&copy; Copyright © Problem Child. All rights reserved.</p>
-        </div>
-        
-    </footer> 
+    <?php include_once "../components/footer.php"  ?>
     
     <script>
         function showSidebar() {

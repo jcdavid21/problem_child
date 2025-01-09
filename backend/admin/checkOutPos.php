@@ -8,7 +8,9 @@ if(isset($_SESSION["user_id"])){
     $ref_number = mt_rand(1000000000000, 9999999999999);
     $depositAmount = $_POST["total"];
     $shippingFee = 0;
+    date_default_timezone_set("Asia/Manila");
     $date = date("Y-m-d");
+    $date_transaction = date("Y-m-d H:i:s");
 
     $queryAddress = "SELECT * FROM addresses WHERE user_id = ? AND address_default = 1";
     $stmtAddress = $conn->prepare($queryAddress);
@@ -87,7 +89,7 @@ if(isset($_SESSION["user_id"])){
     $user_id_type = 1;
     $queryTrans = "INSERT INTO tbl_transactions (user_id, user_name, user_type, user_activity, activity_date, item_id) VALUES (?, ?, ?, ?, ?, ?)";
     $stmtTrans = $conn->prepare($queryTrans);
-    $stmtTrans->bind_param("issssi", $user_id, $username, $user_id_type, $activity, $date, $lastId);
+    $stmtTrans->bind_param("issssi", $user_id, $username, $user_id_type, $activity, $date_transaction, $lastId);
     $stmtTrans->execute();
 
 

@@ -73,9 +73,11 @@ if (isset($_POST['signup-submit'])) {
             $_SESSION['auth'] = true;
 
             if ($_SESSION['isAdmin'] == 1) {
-                $query2 = "INSERT INTO tbl_audit_log(log_user_id, log_username, log_user_type) VALUES(?, ?, ?)";
+                date_default_timezone_set("Asia/Manila");
+                $date = date('Y-m-d H:i:s');
+                $query2 = "INSERT INTO tbl_audit_log(log_user_id, log_username, log_user_type, log_date) VALUES(?, ?, ?, ?)";
                 $stmt2 = $conn->prepare($query2);
-                $stmt2->bind_param("isi", $row["user_id"], $row["email"], $row["isAdmin"]);
+                $stmt2->bind_param("isss", $row['user_id'], $row['first_name'], $row['isAdmin'], $date);
                 $stmt2->execute();
 
                 redirect("../admin/index.php", "Login Successful");

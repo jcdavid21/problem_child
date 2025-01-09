@@ -561,7 +561,7 @@ if (!isset($_SESSION['user_id'])) {
                                     </td>
                                     <td class="total-price-js">₱<span class="subtotal-js"><?php echo number_format($subtotal, 2); ?></span></td>
                                     <?php 
-                                        if($_GET["status_id"] == 3 || $_GET["status_id"] == 4){
+                                        if($status_id[0] == 3 || $status_id[0] == 4){
                                             $queryGetTrackingNumber = "SELECT tt.tracking_number FROM tbl_tracking_number tt INNER JOIN tbl_orders o ON tt.order_id = o.order_id WHERE o.cart_id = ?";
                                             $stmtGetTrackingNumber = mysqli_prepare($conn, $queryGetTrackingNumber);
                                             mysqli_stmt_bind_param($stmtGetTrackingNumber, 'i', $data['cart_id']);
@@ -666,44 +666,7 @@ if (!isset($_SESSION['user_id'])) {
     <?php } ?>
 
     <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container1">
-            <div class="row1">
-                <div class="logo2">
-                    <a href="home.php"><img  src="../picture/icon/logo1.png" alt=""></a>
-                </div>
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="../index.php">Home</a></li>
-                        <li><a href="../shop/shop.php">Shop</a></li>
-                        <li><a href="../sizechart/sizechart.php">Size Chart</a></li>
-                        <li><a href="../contact/contact.php">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Get Help</h4>
-                    <ul>
-                        <li><a href="../faq/faq.php">FAQ</a></li>
-                        <li><a href="../about/about.php">About Us</a></li>
-                        <li><a href="../privacypolicy/privacypolicy.php">Privacy Policy</a></li>
-                        <li><a href="../terms/terms.php">Terms & Conditions</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Follow Us</h4>
-                    <div class="social-links">
-                        <a href="https://www.facebook.com/thePrblmChld"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://twitter.com/problemchildswc"><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.instagram.com/problemchild.swc"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <p>&copy; Copyright © Problem Child. All rights reserved.</p>
-        </div>
-        
-    </footer> 
+    <?php include_once "../components/footer.php"; ?>
     
     <script>
         function showSidebar() {

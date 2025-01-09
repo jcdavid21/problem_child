@@ -81,7 +81,7 @@ main .center .div, .center .h1-div {
     border: 1px solid #e2e8f0;
     background-color: #ffffff;
     border-radius: 8px;
-    overflow: hidden;
+
 }
 
 .styled-table th {
@@ -99,6 +99,13 @@ main .center .div, .center .h1-div {
     padding: 10px 8px;
     color: #4a5568;
     font-size: 15px;
+}
+
+.styled-table th, .styled-table td {
+    word-wrap: break-word; /* Prevent long text from breaking layout */
+    white-space: nowrap; /* Ensure the content doesn't wrap unnecessarily */
+    text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+    overflow: hidden; /* Hide overflowing content */
 }
 
 .styled-table tbody tr:nth-child(even) {
@@ -354,4 +361,47 @@ main .center .div, .center .h1-div {
     .img-con, .th-1 {
         display: none;
     }
+
+    .styled-table {
+        display: block; /* Ensure the table is block-level for scrolling */
+        overflow-x: auto; /* Enable horizontal scroll */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling for touch devices */
+    }
+}
+
+
+@media (max-width: 600px) {
+  .center .h1-div {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .center .h1-div h1{
+    font-size: 26px;
+  }
+
+  .center .h1-div .count-con{
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .styled-table {
+    width: 100%;
+    overflow-x: auto; /* Ensure table is scrollable horizontally */
+}
+
+.styled-table th, .styled-table td {
+    font-size: 14px; /* Adjust font size for better readability */
+}
+
+  
+  
+
+  .center .div{
+    display: block;
+  }
+
+    
 }

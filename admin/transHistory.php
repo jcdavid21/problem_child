@@ -24,6 +24,9 @@ require_once("../config/dbcon.php");
     <link href="../plugins/responsive.bootstrap5.min.css" rel="stylesheet" />
     <link href="../styles/bootstrap5-min.css" rel="stylesheet" />
     <link href="../styles/card-general.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Include DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
     <script src="../scripts/sweetalert2.js"></script>
     <script
       src="../scripts/font-awesome.js"
@@ -61,7 +64,7 @@ require_once("../config/dbcon.php");
                         </thead>
                         <tbody>
                           <?php
-                            $query = "SELECT * FROM tbl_transactions";
+                            $query = "SELECT * FROM tbl_transactions ORDER BY activity_date DESC";
                             $stmt = $conn->prepare($query);
                             $stmt->execute();
                             $result = $stmt->get_result();
@@ -75,7 +78,7 @@ require_once("../config/dbcon.php");
                             <td><?php echo $data['user_activity'];?></td>
                             <td><?php echo $data['item_id'];?></td>
                             <td><?php echo "Admin"; ?></td>
-                            <td><?php echo $dateObject->format('F j, Y'); ?></td>
+                            <td><?php echo $dateObject->format('F j, Y g:i A'); ?></td>
                           </tr>
                           <?php
                             }

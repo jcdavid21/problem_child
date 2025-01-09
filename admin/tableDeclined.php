@@ -144,7 +144,7 @@ require_once("../config/dbcon.php");
  
                                     // Loop through each order and display order details
                                     while ($order_data = $result_orders->fetch_assoc()) {
-                                      $total = $order_data["quantity"] * $order_data["price"];
+                                      $total = $order_data["quantity"] * $order_data["prod_price"];
                                       
                                     ?>
                                     <div class="mb-3 col-md-12">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 08, 2025 at 03:16 PM
+-- Generation Time: Jan 09, 2025 at 12:10 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -74,13 +74,14 @@ INSERT INTO `cart` (`cart_id`, `user_id`, `variation_id`, `quantity`, `price`, `
 (1, 14, 12, 1, 350, 1, 4),
 (5, 14, 12, 1, 350, 1, 4),
 (6, 14, 11, 1, 350, 1, 4),
-(7, 13, 14, 2, 700, 1, 1),
+(7, 13, 14, 2, 700, 1, 4),
 (8, 13, 16, 1, 500, 0, 0),
-(9, 15, 44, 2, 700, 1, 1),
+(9, 15, 44, 2, 700, 1, 4),
 (10, 15, 29, 1, 350, 1, 4),
-(11, 15, 16, 1, 350, 1, 4),
+(11, 15, 16, 3, 1050, 1, 4),
 (12, 14, 12, 1, 350, 1, 4),
-(13, 14, 16, 1, 500, 1, 4);
+(13, 14, 16, 1, 500, 1, 4),
+(21, 14, 29, 2, 1100, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -100,9 +101,7 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`category_id`, `category_name`) VALUES
 (1, 'T-SHIRT'),
 (2, 'HOODIES'),
-(3, 'BOTTOMS'),
-(4, 'ACCESSORIES'),
-(5, 'HEADWEAR');
+(3, 'BOTTOMS');
 
 -- --------------------------------------------------------
 
@@ -193,7 +192,7 @@ INSERT INTO `product_size_variation` (`variation_id`, `product_id`, `size_id`, `
 (9, 6, 2, 50),
 (10, 7, 2, 50),
 (11, 1, 2, 48),
-(12, 1, 1, 4),
+(12, 1, 1, 39),
 (13, 1, 3, 49),
 (14, 2, 1, 48),
 (15, 2, 4, 50),
@@ -210,7 +209,7 @@ INSERT INTO `product_size_variation` (`variation_id`, `product_id`, `size_id`, `
 (26, 15, 3, 50),
 (27, 15, 4, 50),
 (28, 16, 1, 50),
-(29, 16, 2, 49),
+(29, 16, 2, 47),
 (30, 16, 3, 50),
 (31, 16, 4, 50),
 (44, 28, 1, 28),
@@ -279,7 +278,13 @@ INSERT INTO `tbl_audit_log` (`log_user_id`, `log_username`, `log_user_type`, `lo
 (14, 'golden@gmail.com', '1', '2025-01-08 11:52:29'),
 (14, 'golden@gmail.com', '1', '2025-01-08 13:01:44'),
 (14, 'golden@gmail.com', '1', '2025-01-08 13:13:03'),
-(14, 'golden@gmail.com', '1', '2025-01-08 14:13:58');
+(14, 'golden@gmail.com', '1', '2025-01-08 14:13:58'),
+(14, 'golden@gmail.com', '1', '2025-01-09 08:59:58'),
+(14, 'golden', '1', '2025-01-09 09:10:02'),
+(14, 'golden', '1', '2025-01-09 09:17:57'),
+(14, 'golden', '1', '2025-01-09 09:19:04'),
+(14, 'golden', '1', '2025-01-09 09:25:42'),
+(14, 'golden', '1', '2025-01-09 09:35:44');
 
 -- --------------------------------------------------------
 
@@ -310,7 +315,12 @@ INSERT INTO `tbl_audit_trail` (`trail_user_id`, `trail_username`, `trail_activit
 (14, 'golden miral', 'Updated product details for product ID: 2', 'Admin', '2025-01-07 10:35:22'),
 (14, 'golden miral', 'Updated product details for product ID: 2', 'Admin', '2025-01-07 10:35:29'),
 (14, 'golden miral', 'Checked out items', 'Admin', '2025-01-08 06:24:03'),
-(14, 'golden miral', 'Checked out items', 'Admin', '2025-01-08 07:12:59');
+(14, 'golden miral', 'Checked out items', 'Admin', '2025-01-08 07:12:59'),
+(14, 'golden miral', 'Updated product details for product ID: 1', 'Admin', '2025-01-09 02:02:53'),
+(14, 'golden miral', 'Updated product details for product ID: 1', 'Admin', '2025-01-09 09:04:13'),
+(14, 'golden miral', 'Checked out items', 'Admin', '2025-01-09 09:20:41'),
+(14, 'golden miral', 'Updated product details for product ID: 1', 'Admin', '2025-01-09 09:23:34'),
+(14, 'golden miral', 'Updated product details for product ID: 1', 'Admin', '2025-01-09 09:26:02');
 
 -- --------------------------------------------------------
 
@@ -326,6 +336,13 @@ CREATE TABLE `tbl_feedback` (
   `user_id` int(11) NOT NULL,
   `variation_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_feedback`
+--
+
+INSERT INTO `tbl_feedback` (`fd_id`, `product_id`, `fd_comment`, `fd_date`, `user_id`, `variation_id`) VALUES
+(8, 2, 'Wow', '2025-01-09', 13, 14);
 
 -- --------------------------------------------------------
 
@@ -351,7 +368,8 @@ INSERT INTO `tbl_orders` (`order_id`, `cart_id`) VALUES
 (5, 10),
 (5, 11),
 (6, 12),
-(7, 13);
+(7, 13),
+(8, 21);
 
 -- --------------------------------------------------------
 
@@ -376,7 +394,8 @@ INSERT INTO `tbl_order_details` (`order_id`, `address_id`, `shipping_fee`) VALUE
 (4, 18, 60),
 (5, 18, 60),
 (6, 19, 0),
-(7, 19, 0);
+(7, 19, 0),
+(8, 19, 0);
 
 -- --------------------------------------------------------
 
@@ -454,7 +473,8 @@ INSERT INTO `tbl_receipt` (`receipt_id`, `user_id`, `order_id`, `receipt_img`, `
 (8, 15, 4, '677e65e1a12ce.jpeg', '2134214213111', 760, '2025-01-08'),
 (9, 15, 5, '677e66d156ba3.jpeg', '2134214213111', 1110, '2025-01-08'),
 (10, 14, 6, NULL, '3649210914891', 350, '2025-01-08'),
-(11, 14, 7, NULL, '7871410466876', 500, '2025-01-08');
+(11, 14, 7, NULL, '7871410466876', 500, '2025-01-08'),
+(12, 14, 8, NULL, '9785988442358', 1100, '2025-01-09');
 
 -- --------------------------------------------------------
 
@@ -473,7 +493,9 @@ CREATE TABLE `tbl_tracking_number` (
 --
 
 INSERT INTO `tbl_tracking_number` (`tracking_id`, `tracking_number`, `order_id`) VALUES
-(2, '9321342', 5);
+(2, '9321342', 5),
+(3, '832134', 3),
+(4, '45123452', 4);
 
 -- --------------------------------------------------------
 
@@ -486,7 +508,7 @@ CREATE TABLE `tbl_transactions` (
   `user_name` varchar(50) NOT NULL,
   `user_type` varchar(50) NOT NULL,
   `user_activity` varchar(100) NOT NULL,
-  `activity_date` date NOT NULL,
+  `activity_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `item_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -495,12 +517,9 @@ CREATE TABLE `tbl_transactions` (
 --
 
 INSERT INTO `tbl_transactions` (`user_id`, `user_name`, `user_type`, `user_activity`, `activity_date`, `item_id`) VALUES
-(14, 'golden miral', '1', 'Checked out items', '2025-01-07', 1),
-(14, 'golden miral', '1', 'Checked out items', '2025-01-07', 2),
-(14, 'golden miral', '1', 'Claimed items', '2025-01-08', 5),
-(14, 'golden miral', '1', 'Claimed items', '2025-01-08', 5),
-(14, 'golden miral', '1', 'Checked out items', '2025-01-08', 6),
-(14, 'golden miral', '1', 'Checked out items', '2025-01-08', 7);
+(14, 'golden miral', '1', 'Claimed items', '2025-01-08 16:00:00', 3),
+(14, 'golden miral', '1', 'Claimed items', '2025-01-09 09:18:16', 4),
+(14, 'golden miral', '1', 'Checked out items', '2025-01-09 09:20:41', 8);
 
 -- --------------------------------------------------------
 
@@ -672,7 +691,7 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -720,7 +739,7 @@ ALTER TABLE `sizes`
 -- AUTO_INCREMENT for table `tbl_feedback`
 --
 ALTER TABLE `tbl_feedback`
-  MODIFY `fd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `fd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_order_status`
@@ -732,13 +751,13 @@ ALTER TABLE `tbl_order_status`
 -- AUTO_INCREMENT for table `tbl_receipt`
 --
 ALTER TABLE `tbl_receipt`
-  MODIFY `receipt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `receipt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_tracking_number`
 --
 ALTER TABLE `tbl_tracking_number`
-  MODIFY `tracking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `tracking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`

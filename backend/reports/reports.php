@@ -2,6 +2,8 @@
     require_once("../../config/dbcon.php");
     
     function report($conn, $trail_id, $trail_username, $trail_activity, $trail_user_type) {
+        date_default_timezone_set("Asia/Manila");
+        
         $trail_date = date("Y-m-d H:i:s");
         $query = "INSERT INTO tbl_audit_trail 
                   (trail_user_id, trail_username, trail_activity, trail_user_type, trail_date) 

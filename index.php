@@ -805,6 +805,29 @@ $result = $stmt->get_result();
                 display: block;
                 margin-bottom: 20px;
             }
+
+            #slider-container{
+                margin-top: 90px;
+            }
+        }
+
+        #slider .slide2{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 60px;
+        }
+
+        #slider .slide3{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px;
+        }
+
+        #slider .slide3 img{
+            width: 100%;
+            max-height: 700px;
+            object-fit: cover;
         }
 
         /* Style the counter cards */
@@ -900,8 +923,12 @@ $result = $stmt->get_result();
     <div id="slider-container">
             <div id="slider">
                     <div class="slide"><img src="picture/icon/homeimage.png" alt="image1"></div>
-                    <div class="slide"><img src="picture/icon/homeimage1.png" alt="image2"></div>
-                    <div class="slide"><img src="picture/icon/homeimage2.png" alt="image3"></div>
+                    <div class="slide slide2"><img src="picture/img-5.jpeg" alt="image2"></div>
+                    <div class="slide slide2 slide3">
+                        <img src="./picture/img1.jpg" alt="">
+                        <img src="./picture/img-2.jpg" alt="">
+                        <img src="./picture/img-3.jpg" alt="">
+                    </div>
             </div>
             <div id="prev"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg></div>
             <div id="next"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg></div> 
@@ -1023,6 +1050,7 @@ $result = $stmt->get_result();
                         <li><a href="about/about.php">About Us</a></li>
                         <li><a href="privacypolicy/privacypolicy.php">Privacy Policy</a></li>
                         <li><a href="terms/terms.php">Terms & Conditions</a></li>
+                        <li><a href="https://www.jtexpress.ph/trajectoryQuery?flag=1" target="_blank">J&T Tracking</a></li>
                     </ul>
                 </div>
                 

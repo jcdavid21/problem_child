@@ -28,7 +28,11 @@ $sizeResult = mysqli_query($conn, $sizeQuery);
 $sizes = array();
 if ($sizeResult) {
     while ($sizeRow = mysqli_fetch_assoc($sizeResult)) {
-        $sizes[$sizeRow['size_id']] = $sizeRow['size_name'];
+        $array = array(
+            'size_id' => $sizeRow['size_id'],
+            'size_name' => $sizeRow['size_name']
+        );
+        array_push($sizes, $array);
     }
 } else {
     die("Error fetching sizes: " . mysqli_error($conn));
@@ -515,12 +519,13 @@ $variation_id = $variationRow['variation_id'];
         }
         @media screen and (max-width: 650px){
             .image_container{
-                height: 600px;
+                height: max-content;
                 width: 100%;
             }
             .image_box img{
-                width: auto;
-                height: auto;
+                height: 250px;
+                width: 100%;
+                object-fit: contain;
             }
         }
 
@@ -649,6 +654,16 @@ $variation_id = $variationRow['variation_id'];
             .logo2 img{
                 margin-left: 80px;
             }
+            
+            .quantity_container{
+                width: 220px;
+                gap: 10px;
+            }
+
+            .quantity_container input{
+                width: 15px;
+            }
+
         }
         @media(max-width: 500px){
             .sidebar{
@@ -659,6 +674,11 @@ $variation_id = $variationRow['variation_id'];
             }
             .logo2 img{
                 margin-left: 80px;
+            }
+
+            .test-con .flex-con .left img{
+                height: 20px;
+                width: 20px;
             }
         }
         @media(max-width: 399px){
@@ -694,6 +714,23 @@ $variation_id = $variationRow['variation_id'];
                 height: 100%;
                 object-fit: contain;
             }
+
+            .testimonials .test-con .title-con{
+                font-size: 16px;
+            }
+
+            .testimonials .test-con .name{
+                display: flex;
+                flex-direction: column;
+                align-items: start;
+                justify-content: start;
+            }
+
+            .testimonials .test-con .name p, .testimonials .test-con .name h4{
+                font-size: 14px;
+                line-height: 16px;
+            }
+
         }
 
     
@@ -712,9 +749,9 @@ $variation_id = $variationRow['variation_id'];
 
     <!-- BODY -->
     <div class="main_container">
-        <form id="addToCartForm" action="process_cart.php" method="post">
+        <form id="addToCartForm">
             <input type="hidden" name="selectedSize" id="selectedSize" value="">
-            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" hidden>
+            <input type="hidden" id="product_id" name="product_id" value="<?php echo $product_id; ?>" hidden>
             <input type="hidden" name="variationId" id="variationId" value="<?php echo $variation_id; ?>">
             <input type="hidden" name="price" id="price" value="<?php echo $price; ?>">
             <input type="hidden" name="quantity" id="quantityInput" value="1">
@@ -735,7 +772,7 @@ $variation_id = $variationRow['variation_id'];
                     <div class="size_selection">
                         <?php
                         foreach ($sizes as $size) {
-                            echo '<div class="size_box" onclick="toggleSize(this)" data-size="' . $size . '">' . $size . '</div>';
+                            echo '<div class="size_box" onclick="toggleSize(this)" data-size="' . $size['size_name'] . '" data-size-id="' . $size['size_id'] . '">' . $size['size_name'] . '</div>';
                         }
                         ?>
                     </div>
@@ -746,7 +783,7 @@ $variation_id = $variationRow['variation_id'];
                             <input class="number" type="text" id="quantityInput1" value="1">
                             <button class="btn plus-btn" type="button">+</button>
                         </div>
-                        <button type="submit" class="btn_add" name="add_to_cart">Add to Cart</button>
+                        <button type="submit" class="btn_add submit" name="add_to_cart">Add to Cart</button>
                     </div>
                     <div class="details_container">
                         <div class="details">
@@ -1056,5 +1093,6 @@ $variation_id = $variationRow['variation_id'];
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
         crossorigin="anonymous">
     </script>
+    <script src="../jquery/addtocart.js"></script>
 </body>
 </html>

@@ -56,3 +56,23 @@ body .testimonials p{
     justify-content: start;
     gap: 10px;
 }
+
+@media(max-width: 500px){
+    .test-con{
+        padding: 6px;
+    }
+    .right, .left{
+        width: 100%;
+    }
+
+    .test-con .flex-con{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .test-con .flex-con .left img{
+        height: 30px;
+        width: 30px;
+        margin-bottom: 10px;
+    }
+}

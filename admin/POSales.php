@@ -105,8 +105,8 @@ require_once("../config/dbcon.php");
                               data-bs-target="#residenceAccountDetails<?php echo $order_id; ?>" data-bs-whatever="@getbootstrap">
                                 <i class="fa-solid fa-eye" style="color: #fcfcfc;"></i>
                               </button>
-                              <a href="./print.php?order_id=<?php echo $data["order_id"]; ?>" target="_blank">
-                                  <button type="button" class="btn btn-success" id="<?php echo $data["receipt_id"] ?>" >
+                              <a href="./print.php?order_id=<?php echo $order_id; ?>" target="_blank">
+                                  <button type="button" class="btn btn-success" id="<?php echo $order_id ?>" >
                                     <i class="fa-solid fa-print" style="color: #fcfcfc;"></i>
                                   </button>
                                 </a>
@@ -139,7 +139,7 @@ require_once("../config/dbcon.php");
  
                                     // Loop through each order and display order details
                                     while ($order_data = $result_orders->fetch_assoc()) {
-                                      $total = $order_data["quantity"] * $order_data["price"];
+                                      $total = $order_data["quantity"] * $order_data["prod_price"];
                                       
                                     ?>
                                     <div class="mb-3 col-md-12">
