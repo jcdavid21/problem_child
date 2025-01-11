@@ -10,6 +10,13 @@ if (isset($_POST['signup-submit'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $confirm_password = mysqli_real_escape_string($conn, $_POST['confirm_password']);
+    $term_con = isset($_POST['term_con']) ? mysqli_real_escape_string($conn, $_POST['term_con']) : '';
+
+    if (empty($term_con)) {
+        redirect("../login/login.php", "Please agree to the terms and conditions");
+        exit();
+    }
+
 
     // Validate inputs
     if (empty($first_name) || empty($last_name) || empty($email) || empty($password) || empty($confirm_password)) {

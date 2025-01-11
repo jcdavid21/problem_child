@@ -9,6 +9,8 @@ if (!isset($_SESSION['user_id'])) {
     echo "<script>window.location.href='../login/login.php';</script>";
     exit;
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,256 +21,12 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <title>Problem Child</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap');
-        @import url('http://fonts.googleapis.com/css2?family=Poppins&display=swap');
-        @font-face {
-            font-family: 'glacial_indifferenceregular';
-            src: url('glacialindifference-regular-webfont.woff2') format('woff2'),
-                url('glacialindifference-regular-webfont.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-        @font-face{
-            font-family: Horizon;
-            src:url(../font/horizon.otf);
-        }
-        *{
-            margin: 0;
-            padding: 0;
-            text-decoration: none !important;
-            list-style: none;
-            box-sizing: border-box;
-        }
         body{
             min-height: 100vh;
             width: 100%;
             background: #F6F5F0 !important;
             font-family: Arial, sans-serif;
             overflow-x: hidden;
-        }
-        #searchFormDesktop button, #searchFormMobile button{
-            background: transparent;
-            border: none;
-            cursor: pointer;
-        }
-        html{
-            height: 100%;
-        }
-        /* CSS FOR NAVIGATION BAR */
-        nav{
-            background-color: #FAE9D7;
-            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
-        }
-        nav ul{
-            width: 100%;
-            list-style: none;
-            display: flex;
-            align-items: center;
-        }
-        nav li{
-            height: 80px;
-        }
-        nav .logo{
-            width: 10%;
-            margin-right: 5%;
-        }
-        nav .name{
-            height: 100%;
-            padding: 0 30px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            color: black;
-            text-decoration: none;
-            font-family: Horizon;
-            font-weight: bold;
-            font-size: 35px;
-        }
-
-        nav .active{
-            height: 100%;
-            padding: 0 30px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            color: black;
-            text-decoration: none;
-            font-family: 'glacial_indifferenceregular';
-            font-weight: 300;
-            font-size: 20px;
-        }
-
-        nav .active:hover{
-            background-color: #FAE9D7;
-            height: 80%;
-        }
-        nav li:first-child{
-            margin-right: auto;
-        }
-
-        .sidebar{
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 250px;
-            z-index: 999;
-            background-color: #fae9d749;
-            backdrop-filter: blur(10px);
-            box-shadow: -10px 0 10px rgba(0, 0, 0, 0.2);
-            display: none;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: flex-start;
-        }
-        .sidebar li{
-            width: 100%;
-        }
-        .sidebar a{
-            width: 100%;
-        }
-
-
-        nav .box{
-            margin-top: 20px;
-            margin-right: 15px;
-            height: 40px;
-            display: flex;
-            cursor: pointer;
-            padding: 10px 20px;
-            border-radius: 30px;
-            align-items: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            margin-left: 20px;
-        }
-        nav .box:hover input{
-            width: 180px;
-        }
-        nav .box input{
-            width: 0;
-            outline: none;
-            border: none;
-            font-weight: 500;
-            transition: 0.8s;
-            background: transparent;
-        }
-
-        nav .box a .fa{
-            color: #FAE9D7;
-            font-size: 18px;
-        }
-        nav svg{
-            margin-top: 25px;
-        }
-
-        nav .cart1 a i{
-            color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 32px;
-            width: 35px;
-        }
-        nav .cart1 a{
-            text-decoration: none;
-        }
-        nav .user a i {
-          color: black;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 32px;
-          width: 35px;
-        }
-        nav .user a{
-            text-decoration: none;
-        }
-        nav .login a button{
-            color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-            margin-right: 5px;
-            margin-left: 5px;
-        }
-        nav .login a{
-            text-decoration: none;
-        }
-        .button-74 {
-          background-color: #fbeee0;
-          border: 2px solid #422800;
-          border-radius: 30px;
-          box-shadow: #422800 4px 4px 0 0;
-          color: #422800;
-          cursor: pointer;
-          display: inline-block;
-          font-weight: 600;
-          font-size: 18px;
-          padding: 0 18px;
-          line-height: 35px;
-          text-align: center;
-          text-decoration: none;
-          user-select: none;
-          -webkit-user-select: none;
-          touch-action: manipulation;
-        }
-
-        .button-74:hover {
-          background-color: #fff;
-        }
-
-        .button-74:active {
-          box-shadow: #422800 2px 2px 0 0;
-          transform: translate(2px, 2px);
-        }
-
-
-        .menu-button{
-            display: none;
-        }
-        /* Add this style to hide the menu by default */
-        .user-menu {
-          display: none;
-          position: absolute;
-          top: 59px;
-          right: 95px;
-          width: 150px;
-          background-color: #fff;
-          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-          border-radius: 5px;
-          z-index: 1;
-        }
-
-        .user-menu::before {
-          content: '';
-          position: absolute;
-          top: -10px;
-          right: 7px;
-          border-style: solid;
-          border-width: 0 15px 15px 15px;
-          border-color: transparent transparent #fff transparent;
-        }
-
-        .user-menu a {
-          display: block;
-          padding: 10px;
-          text-decoration: none;
-          color: #333;
-          font-size: 13px;
-        }
-
-        .user-menu a:hover {
-          background-color: #FFF7EE;
-        }
-
-        .user:hover .user-menu {
-          display: block;
-        }
-
-        .user:hover .user-menu:hover {
-          display: block;
         }
 
 
@@ -668,6 +426,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="../js/jquery.js"></script>
     <script src="../scripts/sweetalert2.js"></script>
+    <link rel="stylesheet" href="../styles/navbar.css">
 </head>
     <!-- NAVIGATION BAR -->
     <?php include_once "../components/nav.php"; ?>
@@ -743,6 +502,47 @@ if (!isset($_SESSION['user_id'])) {
 </div>
 
 <!-- Modal -->
+<?php 
+    $queryData = "SELECT * FROM addresses WHERE user_id = ? AND address_default = 1";
+    $stmtData = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmtData, $queryData)) {
+        echo "SQL Error";
+    } else {
+        mysqli_stmt_bind_param($stmtData, "i", $_SESSION['user_id']);
+        mysqli_stmt_execute($stmtData);
+        $resultData = mysqli_stmt_get_result($stmtData);
+        $row = mysqli_fetch_assoc($resultData);
+    }
+
+    if(empty($row)){
+?>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Receipt Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <h5 class="text-center">Please add an address / set address default first before proceeding to checkout.</h5>
+                    <div class="text-center">
+                        <a href="../profile/profile.php" class="button-74">Add Address</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
+
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -754,23 +554,12 @@ if (!isset($_SESSION['user_id'])) {
             </div>
             <div class="modal-body">
                 <form>
+                    
+                    
                 <div class="mb-3">
                     <label class="col-form-label">Total Amount:</label>
                     <input type="text" disabled id="overAllTotal" class="font-weight-bold" value="₱0.00">
                 </div>
-
-                    <?php 
-                        $queryData = "SELECT * FROM addresses WHERE user_id = ? AND address_default = 1";
-                        $stmtData = mysqli_stmt_init($conn);
-                        if (!mysqli_stmt_prepare($stmtData, $queryData)) {
-                            echo "SQL Error";
-                        } else {
-                            mysqli_stmt_bind_param($stmtData, "i", $_SESSION['user_id']);
-                            mysqli_stmt_execute($stmtData);
-                            $resultData = mysqli_stmt_get_result($stmtData);
-                            $row = mysqli_fetch_assoc($resultData);
-                        }
-                    ?>
 
                     <div class="mb-3">
                         
@@ -838,11 +627,6 @@ if (!isset($_SESSION['user_id'])) {
 
 <!-- Script For Cart -->
 
-<script>
-    $(document).ready(function () {
-        
-    });
-</script>
 
     
 

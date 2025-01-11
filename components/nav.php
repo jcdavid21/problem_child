@@ -1,3 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .cart1 {
+            position: relative;
+        }
+
+        .cart1 .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
 <nav>
         <ul class="sidebar">
             
@@ -15,10 +42,20 @@
             <li><a href="../shop/shop.php" class="active" >Shop</a></li>
             <li><a href="../sizechart/sizechart.php" class="active">Size</a></li>
             <li><a href="../contact/contact.php" class="active">Contact</a></li>
+            <?php
+                if(!empty($_SESSION["user_id"])){
+            ?>
             <li><a href="../cart/cart.php" class="active">Cart</a></li>
             <li><a href="../components/pendingOrders.php" class="active">My Purchases</a></li>
             <li><a href="../profile/profile.php" class="active">Profile</a></li>
             <li><a href="../logout/logout.php" class="active">Logout</a></li>
+            <?php
+                } else {
+            ?>
+            <li><a href="../login/login.php" class="active">Login</a></li>
+            <?php
+                }
+            ?>
         </ul>
         <ul>
             
@@ -37,12 +74,42 @@
             </div>
             </li>
             <li class="hideOnMobile">
-            <div class="cart1">
-                <a href="../cart/cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
-            </div>
+            <?php
+                if(!empty($_SESSION["user_id"])){
+            ?>
+                <div class="cart1">
+                    <a href="../cart/cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                    <div class="cart-count">
+                        <?php
+                            // Check if the user is logged in
+                            if(isset($_SESSION['user_id'])) {
+                                
+                                $cartCount = 0;
+                                $queryCount = "SELECT COUNT(*) as cartCount FROM cart WHERE user_id = ? AND status_id = 0";
+                                $stmtCount = mysqli_prepare($conn, $queryCount);
+                                mysqli_stmt_bind_param($stmtCount, "i", $_SESSION['user_id']);
+                                mysqli_stmt_execute($stmtCount);
+                                $resultCount = mysqli_stmt_get_result($stmtCount);
+                                $rowCount = mysqli_fetch_assoc($resultCount);
+                                $cartCount = $rowCount['cartCount'];
+                                
+                                echo $cartCount;
+                            } else {
+                                // User is not logged in, display 0
+                                echo '0';
+                            }
+                        ?>
+                    </div>
+                </div>
+            <?php
+                }
+            ?>
             </li>
             </li>
             <li class="hideOnMobile">
+            <?php
+                if(!empty($_SESSION["user_id"])){
+            ?>
             <div class="user">
                 <a href="../profile/profile.php"><i class="fa-regular fa-user"></i></a>
                 <!-- User menu -->
@@ -52,6 +119,9 @@
                   <a href="../logout/logout.php">Logout</a>
                 </div>
             </div>
+            <?php
+                }
+            ?>
             </li>
             <li class="hideOnMobile">
                 <div class="login">
@@ -92,3 +162,5 @@
 
 
     </script>
+</body>
+</html>

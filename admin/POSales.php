@@ -59,9 +59,11 @@ require_once("../config/dbcon.php");
                         <thead>
                           <tr>
                               <th>Account ID</th>
+                              <th>Order ID</th>
                               <th>Admin Name</th>
                               <th>Admin Contact</th>
                               <th>Admin Address</th>
+                              <th>Date Ordered</th>
                               <th>Action</th>
                           </tr>
                         </thead>
@@ -73,15 +75,16 @@ require_once("../config/dbcon.php");
                                     tr.status_name, 
                                     tr.status_id, 
                                     od.address_id, od.shipping_fee, od.order_id,
-                                    td.user_id, td.full_name, td.phone_number, td.address_region, td.postal_code, td.street_name, td.address_default
+                                    td.user_id, td.full_name, td.phone_number, td.address_region, td.postal_code, td.street_name, td.address_default, ts.uploaded_date
                                 FROM users ta
                                 INNER JOIN cart tc ON tc.user_id = ta.user_id
                                 INNER JOIN tbl_orders o ON o.cart_id = tc.cart_id
                                 INNER JOIN tbl_order_details od ON o.order_id = od.order_id
                                 INNER JOIN addresses td ON td.address_id = od.address_id
                                 INNER JOIN tbl_order_status tr ON tc.status_id = tr.status_id
+                                INNER JOIN tbl_receipt ts ON ts.order_id = od.order_id
                                 WHERE tc.status_id = 4 AND td.address_default = 1 AND ta.isAdmin = 1
-                                GROUP BY od.order_id";
+                                GROUP BY od.order_id ORDER BY ts.uploaded_date DESC";
                           $stmt = $conn->prepare($query);
                           $stmt->execute();
                           $result = $stmt->get_result();
@@ -94,12 +97,15 @@ require_once("../config/dbcon.php");
                             $status_id = $data["status_id"];
                             $shipping_fee = $data["shipping_fee"];
                             $address = $data["street_name"].", ".$data["address_region"];
+                            $dateObject = new DateTime($data["uploaded_date"]);
                           ?>
                           <tr>
                           <td><?php echo $account_id;?></td>
+                            <td><?php echo $order_id;?></td>
                             <td><?php echo $full_name;?></td>
                             <td><?php echo $contact;?></td>
                             <td><?php echo $address; ?></td>
+                            <td><?php echo $dateObject->format('F j, Y g:i A'); ?></td>
                             <td>
                               <button type="button" class="btn btn-primary" data-bs-toggle="modal" 
                               data-bs-target="#residenceAccountDetails<?php echo $order_id; ?>" data-bs-whatever="@getbootstrap">

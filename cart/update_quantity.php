@@ -25,6 +25,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $row = mysqli_fetch_assoc($result);
             $productPrice = $row['price'];
 
+            //check quantity in stock
+            $checkQuantity = "SELECT quantity_in_stock FROM product_size_variation WHERE product_id = ? AND size_id = ?";
+            $stmt = mysqli_prepare($conn, $checkQuantity);
+            mysqli_stmt_bind_param($stmt, "ii", $row['product_id'], $row['size_id']);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $row = mysqli_fetch_assoc($result);
+            $quantity_in_stock = $row["quantity_in_stock"];
+
+            if($quantity > $quantity_in_stock){
+                echo json_encode(["status" => "error", "message" => "Quantity exceeds available stock (" . $quantity_in_stock . ")", "quantity_in_stock" => $quantity_in_stock]);
+                exit;
+            }
+
+
             // Update the cart quantity
             $update_query = "UPDATE cart SET quantity = ? WHERE cart_id = ? AND user_id = ?";
             $stmt = mysqli_prepare($conn, $update_query);

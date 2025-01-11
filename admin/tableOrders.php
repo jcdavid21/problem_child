@@ -56,7 +56,7 @@ require_once("../config/dbcon.php");
                             <p class="card-title text-light">Pending Orders
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                       <table id="productTable" class="table table-striped nowrap" style="width:100%">
                         <thead>
                           <tr>
@@ -226,7 +226,7 @@ require_once("../config/dbcon.php");
                             <p class="card-title text-white">Processing Orders
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                       <table id="productTable2" class="table table-striped nowrap" style="width:100%">
                         <thead>
                           <tr>

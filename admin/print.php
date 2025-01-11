@@ -21,11 +21,16 @@ require_once("../config/dbcon.php");
             box-sizing: border-box;
         }
 
+        body{
+            padding: 5px 12px;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
         #printableCart {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 5px;
             width: 100%;
         }
 
@@ -52,17 +57,17 @@ require_once("../config/dbcon.php");
             margin-top: 5px;
             padding-top: 5px;
             font-size: 10px;
-            justify-content: end;
+        }
+
+        .date-obj {
+            font-size: 4px;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
 
         @page {
             size: 57mm 50mm; /* Specify thermal paper size */
             margin: 0; /* Removes headers and footers */
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
         }
     </style>
 </head>
@@ -78,16 +83,17 @@ require_once("../config/dbcon.php");
         $order_id = $_GET["order_id"];
     }
     $total = 0;
-
+    $date_time = '';
     $query_orders = "SELECT tc.cart_id, tc.quantity, tc.price, tc.status_id, tp.price as product_price, 
         tp.product_name, tp.product_image, c.category_name, tv.size_id, tv.variation_id, 
-        ts.size_name, o.order_id 
+        ts.size_name, o.order_id, tr.uploaded_date
         FROM cart tc 
         INNER JOIN product_size_variation tv ON tv.variation_id = tc.variation_id 
         INNER JOIN product tp ON tp.product_id = tv.product_id 
         INNER JOIN category c ON c.category_id = tp.category_id 
         INNER JOIN sizes ts ON ts.size_id = tv.size_id 
         INNER JOIN tbl_orders o ON o.cart_id = tc.cart_id
+        INNER JOIN tbl_receipt tr ON tr.order_id = o.order_id
         WHERE o.order_id = ?;";
     $stmt_orders = $conn->prepare($query_orders);
     $stmt_orders->bind_param("i", $order_id);
@@ -96,6 +102,8 @@ require_once("../config/dbcon.php");
 
     while ($data = $result_orders->fetch_assoc()) {
         $total += $data['price'];
+        $dateObject = new DateTime($data["uploaded_date"]);
+        $date_time = $dateObject->format('F j, Y g:i A');
     ?>
     <div class="card-order">
         <p><?php echo $data["product_name"] . ' (' . $data["size_name"] . ')'; ?></p>
@@ -103,6 +111,9 @@ require_once("../config/dbcon.php");
     </div>
     <?php } ?>
     <div class="card-order total">
+        <div class="date-obj">
+            <?php echo $date_time; ?>
+        </div>
         <p>Total: ₱<?php echo $total; ?></p>
     </div>
 </div>

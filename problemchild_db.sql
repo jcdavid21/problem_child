@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 09, 2025 at 12:10 PM
+-- Generation Time: Jan 11, 2025 at 07:37 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -46,9 +46,9 @@ INSERT INTO `addresses` (`address_id`, `user_id`, `full_name`, `phone_number`, `
 (12, 6, 'Andrei', '0909090909', 'Parulan Plaridel Bulacan', '3004', 'Lipana St.', 0),
 (14, 9, 'Andrei', '9879789789', 'Parulan Plaridel Bulacan', '3004', 'Lipana St.', 1),
 (15, 12, 'Petr Jhayiel Quinto', '096352521211', 'Plaridel', '3004', 'Rocka Tabang', 1),
-(17, 13, 'Juan Carlo', '09565535401', 'Kaligayahan', '1124', 'Lot 4 Calle Jayson', 1),
 (18, 15, 'Christian Lugo', '09565535401', 'Novaliches', '1124', 'Bayan', 1),
-(19, 14, 'Golden Miral', '09565535401', 'Novaliches', '1124', 'Bayan Glori', 1);
+(19, 14, 'Admin', '09565535401', 'Quezon City', '1116', 'Tandang Sora', 1),
+(20, 13, 'Juan Carlo', '09565535401', 'Kaligayahan', '1124', 'Lot 4 Calle Jayson', 1);
 
 -- --------------------------------------------------------
 
@@ -81,7 +81,13 @@ INSERT INTO `cart` (`cart_id`, `user_id`, `variation_id`, `quantity`, `price`, `
 (11, 15, 16, 3, 1050, 1, 4),
 (12, 14, 12, 1, 350, 1, 4),
 (13, 14, 16, 1, 500, 1, 4),
-(21, 14, 29, 2, 1100, 1, 4);
+(21, 14, 29, 2, 1100, 1, 4),
+(22, 13, 14, 2, 700, 1, 0),
+(23, 13, 12, 2, 700, 0, 0),
+(24, 14, 21, 2, 1000, 1, 4),
+(25, 14, 24, 2, 1000, 1, 4),
+(26, 14, 17, 2, 1000, 1, 4),
+(27, 15, 2, 1, 350, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -192,19 +198,19 @@ INSERT INTO `product_size_variation` (`variation_id`, `product_id`, `size_id`, `
 (9, 6, 2, 50),
 (10, 7, 2, 50),
 (11, 1, 2, 48),
-(12, 1, 1, 39),
+(12, 1, 1, 3),
 (13, 1, 3, 49),
 (14, 2, 1, 48),
 (15, 2, 4, 50),
 (16, 9, 1, 48),
-(17, 9, 2, 50),
+(17, 9, 2, 48),
 (18, 9, 3, 47),
 (19, 9, 4, 46),
 (20, 10, 1, 50),
-(21, 10, 2, 50),
+(21, 10, 2, 48),
 (22, 10, 3, 50),
 (23, 10, 4, 50),
-(24, 15, 1, 50),
+(24, 15, 1, 48),
 (25, 15, 2, 50),
 (26, 15, 3, 50),
 (27, 15, 4, 50),
@@ -264,28 +270,6 @@ CREATE TABLE `tbl_audit_log` (
   `log_date` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbl_audit_log`
---
-
-INSERT INTO `tbl_audit_log` (`log_user_id`, `log_username`, `log_user_type`, `log_date`) VALUES
-(14, 'golden@gmail.com', '1', '2025-01-07 16:49:54'),
-(14, 'golden@gmail.com', '1', '2025-01-07 16:58:16'),
-(14, 'golden@gmail.com', '1', '2025-01-07 16:58:36'),
-(14, 'golden@gmail.com', '1', '2025-01-08 08:06:34'),
-(14, 'golden@gmail.com', '1', '2025-01-08 11:36:32'),
-(14, 'golden@gmail.com', '1', '2025-01-08 11:48:03'),
-(14, 'golden@gmail.com', '1', '2025-01-08 11:52:29'),
-(14, 'golden@gmail.com', '1', '2025-01-08 13:01:44'),
-(14, 'golden@gmail.com', '1', '2025-01-08 13:13:03'),
-(14, 'golden@gmail.com', '1', '2025-01-08 14:13:58'),
-(14, 'golden@gmail.com', '1', '2025-01-09 08:59:58'),
-(14, 'golden', '1', '2025-01-09 09:10:02'),
-(14, 'golden', '1', '2025-01-09 09:17:57'),
-(14, 'golden', '1', '2025-01-09 09:19:04'),
-(14, 'golden', '1', '2025-01-09 09:25:42'),
-(14, 'golden', '1', '2025-01-09 09:35:44');
-
 -- --------------------------------------------------------
 
 --
@@ -305,22 +289,9 @@ CREATE TABLE `tbl_audit_trail` (
 --
 
 INSERT INTO `tbl_audit_trail` (`trail_user_id`, `trail_username`, `trail_activity`, `trail_user_type`, `trail_date`) VALUES
-(14, 'golden miral', 'Checked out items', 'Admin', '2025-01-07 09:50:45'),
-(14, 'golden miral', 'Activated product with ID: 1', 'Admin', '2025-01-07 10:02:21'),
-(14, 'golden miral', 'Deactivated product with ID: 1', 'Admin', '2025-01-07 10:02:30'),
-(14, 'golden miral', 'Activated product with ID: 1', 'Admin', '2025-01-07 10:02:36'),
-(14, 'golden miral', 'Checked out items', 'Admin', '2025-01-07 10:04:49'),
-(14, 'golden miral', 'Updated product details for product ID: 1', 'Admin', '2025-01-07 10:24:10'),
-(14, 'golden miral', 'Updated product details for product ID: 2', 'Admin', '2025-01-07 10:24:23'),
-(14, 'golden miral', 'Updated product details for product ID: 2', 'Admin', '2025-01-07 10:35:22'),
-(14, 'golden miral', 'Updated product details for product ID: 2', 'Admin', '2025-01-07 10:35:29'),
-(14, 'golden miral', 'Checked out items', 'Admin', '2025-01-08 06:24:03'),
-(14, 'golden miral', 'Checked out items', 'Admin', '2025-01-08 07:12:59'),
-(14, 'golden miral', 'Updated product details for product ID: 1', 'Admin', '2025-01-09 02:02:53'),
-(14, 'golden miral', 'Updated product details for product ID: 1', 'Admin', '2025-01-09 09:04:13'),
-(14, 'golden miral', 'Checked out items', 'Admin', '2025-01-09 09:20:41'),
-(14, 'golden miral', 'Updated product details for product ID: 1', 'Admin', '2025-01-09 09:23:34'),
-(14, 'golden miral', 'Updated product details for product ID: 1', 'Admin', '2025-01-09 09:26:02');
+(14, 'Admin Admin', 'Updated product details for product ID: 1', 'Admin', '2025-01-11 04:58:14'),
+(14, 'Admin Admin', 'Checked out items', 'Admin', '2025-01-11 05:08:33'),
+(14, 'Admin Admin', 'Checked out items', 'Admin', '2025-01-11 05:13:27');
 
 -- --------------------------------------------------------
 
@@ -369,7 +340,10 @@ INSERT INTO `tbl_orders` (`order_id`, `cart_id`) VALUES
 (5, 11),
 (6, 12),
 (7, 13),
-(8, 21);
+(8, 21),
+(9, 24),
+(10, 25),
+(10, 26);
 
 -- --------------------------------------------------------
 
@@ -395,7 +369,9 @@ INSERT INTO `tbl_order_details` (`order_id`, `address_id`, `shipping_fee`) VALUE
 (5, 18, 60),
 (6, 19, 0),
 (7, 19, 0),
-(8, 19, 0);
+(8, 19, 0),
+(9, 19, 0),
+(10, 19, 0);
 
 -- --------------------------------------------------------
 
@@ -459,7 +435,7 @@ CREATE TABLE `tbl_receipt` (
   `receipt_img` varchar(255) DEFAULT NULL,
   `receipt_number` varchar(50) NOT NULL,
   `deposit_amount` float NOT NULL,
-  `uploaded_date` date NOT NULL
+  `uploaded_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -467,14 +443,16 @@ CREATE TABLE `tbl_receipt` (
 --
 
 INSERT INTO `tbl_receipt` (`receipt_id`, `user_id`, `order_id`, `receipt_img`, `receipt_number`, `deposit_amount`, `uploaded_date`) VALUES
-(5, 14, 1, NULL, '2092574583819', 350, '2025-01-07'),
-(6, 14, 2, NULL, '9327215776002', 700, '2025-01-07'),
-(7, 13, 3, '677e605589a68.jpeg', '2134214213111', 760, '2025-01-08'),
-(8, 15, 4, '677e65e1a12ce.jpeg', '2134214213111', 760, '2025-01-08'),
-(9, 15, 5, '677e66d156ba3.jpeg', '2134214213111', 1110, '2025-01-08'),
-(10, 14, 6, NULL, '3649210914891', 350, '2025-01-08'),
-(11, 14, 7, NULL, '7871410466876', 500, '2025-01-08'),
-(12, 14, 8, NULL, '9785988442358', 1100, '2025-01-09');
+(5, 14, 1, NULL, '2092574583819', 350, '2025-01-07 00:00:00'),
+(6, 14, 2, NULL, '9327215776002', 700, '2025-01-07 00:00:00'),
+(7, 13, 3, '677e605589a68.jpeg', '2134214213111', 760, '2025-01-08 00:00:00'),
+(8, 15, 4, '677e65e1a12ce.jpeg', '2134214213111', 760, '2025-01-08 00:00:00'),
+(9, 15, 5, '677e66d156ba3.jpeg', '2134214213111', 1110, '2025-01-08 00:00:00'),
+(10, 14, 6, NULL, '3649210914891', 350, '2025-01-08 00:00:00'),
+(11, 14, 7, NULL, '7871410466876', 500, '2025-01-08 00:00:00'),
+(12, 14, 8, NULL, '9785988442358', 1100, '2025-01-09 00:00:00'),
+(13, 14, 9, NULL, '2798637163522', 1000, '2025-01-11 13:08:33'),
+(14, 14, 10, NULL, '5703804181080', 2000, '2025-01-11 13:13:27');
 
 -- --------------------------------------------------------
 
@@ -517,9 +495,8 @@ CREATE TABLE `tbl_transactions` (
 --
 
 INSERT INTO `tbl_transactions` (`user_id`, `user_name`, `user_type`, `user_activity`, `activity_date`, `item_id`) VALUES
-(14, 'golden miral', '1', 'Claimed items', '2025-01-08 16:00:00', 3),
-(14, 'golden miral', '1', 'Claimed items', '2025-01-09 09:18:16', 4),
-(14, 'golden miral', '1', 'Checked out items', '2025-01-09 09:20:41', 8);
+(14, 'Admin Admin', '1', 'Checked out items', '2025-01-11 05:08:33', 9),
+(14, 'Admin Admin', '1', 'Checked out items', '2025-01-11 05:13:27', 10);
 
 -- --------------------------------------------------------
 
@@ -548,11 +525,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`, `contact_no`, `gender`, `date_of_birth`, `picture_path`, `registered_at`, `isAdmin`, `status_id`) VALUES
 (9, 'Andrei', 'Sabularse', 'andrei@gmail.com', '$2y$10$MJCMb4iKdHQpDI98n.yshOf4lEKSbgN8eRvcGsTLnLGxNdvQDmslS', '0908714345', 'male', '1999-02-10', '../images/icon/profile.png', '2024-10-29', 0, 1),
-(10, 'admin', 'admin', 'admin@gmail.com', '$2y$10$pG.lIBmNuf3Rp/83Xzv/SeHnyFtiES3IY/UXil9zXDoOln74jZp6a', '', NULL, NULL, '../images/icon/profile.png', '2024-11-03', 1, 1),
 (11, 'amon', 'rius', 'amon@gmmail.com', '$2y$10$qSrnYFWCGYO.9x5AkNjPQepGHyuqe.4bwsj/kTOyZ.O1X5kmfm1kC', '', NULL, NULL, '../images/icon/profile.png', '2024-11-16', 0, 1),
 (12, 'Petr ', 'Quinto', 'petr@gmail.com', '$2y$10$RqKF8vXtlnOkJmxlIjjdDehgZ8jicA8xyn8N.yKngbslCdPND54Q2', '', NULL, NULL, '../images/icon/profile.png', '2024-11-16', 0, 1),
 (13, 'Jc', 'David', 'jcdavid123c@gmail.com', '$2y$10$CLDQD5tMxLrNRwePaA67M.GzhojJ0YN05Jx5QZXVLArs12A3/MvAW', NULL, NULL, NULL, '../images/icon/profile.png', '2025-01-02', 0, 1),
-(14, 'golden', 'miral', 'golden@gmail.com', '$2y$10$jonf7TdxUfReZjrlHhJc2es1cbsue/KyxjTdun9FqLcKtQ25rhYT.', NULL, NULL, NULL, '../images/icon/profile.png', '2025-01-04', 1, 1),
+(14, 'Admin', 'Admin', 'admin@gmail.com', '$2y$10$jonf7TdxUfReZjrlHhJc2es1cbsue/KyxjTdun9FqLcKtQ25rhYT.', NULL, NULL, NULL, '../images/icon/profile.png', '2025-01-04', 1, 1),
 (15, 'christian', 'lugo', 'lugo@gmail.com', '$2y$10$KimS1J4w9CsjzdJ3EOvQAufyTpvBgVQsXX/dZv/7xUeRYHJfpFwG.', NULL, NULL, NULL, '../images/icon/profile.png', '2025-01-04', 0, 1);
 
 -- --------------------------------------------------------
@@ -685,13 +661,13 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -751,7 +727,7 @@ ALTER TABLE `tbl_order_status`
 -- AUTO_INCREMENT for table `tbl_receipt`
 --
 ALTER TABLE `tbl_receipt`
-  MODIFY `receipt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `receipt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tbl_tracking_number`
@@ -763,7 +739,7 @@ ALTER TABLE `tbl_tracking_number`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `wishlist`

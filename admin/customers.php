@@ -46,6 +46,7 @@ require_once("../config/dbcon.php");
                                 <th>Account ID</th>
                                 <th>Role</th>
                                 <th>Name</th>
+                                <th>Address Region</th>
                                 <th>Contact</th>
                                 <th>Email</th>
                                 <th>Date of Registered</th>
@@ -54,7 +55,9 @@ require_once("../config/dbcon.php");
                             </thead>
                             <tbody>
                             <?php
-                                $query = "SELECT user_id, CONCAT(first_name, ' ', last_name) as full_name, email, gender, contact_no, date_of_birth, picture_path, registered_at, isAdmin FROM users WHERE status_id = 1 ORDER BY registered_at DESC";
+                                $query = "SELECT tu.user_id, CONCAT(tu.first_name, ' ', tu.last_name) as full_name, tu.email, tu.gender, td.phone_number, tu.date_of_birth, tu.picture_path, tu.registered_at, tu.isAdmin, td.address_region FROM users tu
+                                LEFT JOIN addresses td ON tu.user_id = td.user_id
+                                 WHERE tu.status_id = 1 AND td.address_default = 1 ORDER BY tu.registered_at DESC";
                                 $stmt = $conn->prepare($query);
                                 $stmt->execute();
                                 $result = $stmt->get_result();
@@ -68,7 +71,8 @@ require_once("../config/dbcon.php");
                                 <td><?php echo $data['user_id'];?></td>
                                 <td><?php echo $data["isAdmin"] == 0 ? 'Customer' : 'Admin';?></td>
                                 <td><?php echo $data['full_name'];?></td>
-                                <td><?php echo $data['contact_no'] != null ? $data["contact_no"] : 'No contact # yet';?></td>
+                                <td><?php echo $data['address_region'];?></td>
+                                <td><?php echo $data['phone_number'] != null ? $data["phone_number"] : 'No contact # yet';?></td>
                                 <td><?php echo $data['email'];?></td>
                                 <td><?php echo $formattedDate;?></td>
                                 <!-- <td>

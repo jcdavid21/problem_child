@@ -48,7 +48,7 @@ require_once("../config/dbcon.php");
                             </ol>
 
                             <div class="card mb-5">
-                                <div class="table-responsive">
+                                <div class="card-body table-responsive">
                                 <table id="productTable" class="table table-striped nowrap" style="width:100%">
                                     <thead>
                                     <tr>

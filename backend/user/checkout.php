@@ -9,7 +9,8 @@ if(isset($_POST["refNumber"]) && isset($_POST["depositAmount"]) && isset($_POST[
     $depositAmount = $_POST["depositAmount"];
     $address_id = $_POST["address_id"];
     $shippingFee = $_POST["shippingFee"];
-    $date = date("Y-m-d");
+    date_default_timezone_set("Asia/Manila");
+    $date = date("Y-m-d H:i:s");
     $user_id = $_SESSION['user_id'];
 
     if(isset($_FILES["receiptFile"]) && $_FILES['receiptFile']['error'] === UPLOAD_ERR_OK)

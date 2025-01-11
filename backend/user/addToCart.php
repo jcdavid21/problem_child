@@ -32,7 +32,7 @@
         $quantity_in_stock = $row["quantity_in_stock"];
 
         if($quantity > $quantity_in_stock){
-            echo json_encode(["status" => "error", "message" => "Quantity exceeds available stock"]);
+            echo json_encode(["status" => "error", "message" => "Quantity exceeds available stock (" . $quantity_in_stock . ")"]);
             exit;
         }
 

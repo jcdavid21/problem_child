@@ -42,7 +42,7 @@ require_once("../config/dbcon.php");
                     <!-- <button style="display: flex; width:max-content; margin: 4px;
                     color:white;" class="btn bg-danger" id="delete-logs">
                       Delete Logs</button> -->
-                    <div class="table-responsive">
+                    <div class="card-body table-responsive">
                       <table id="productTable" class="table table-striped nowrap" style="width:100%">
                         <thead>
                           <tr>

@@ -62,7 +62,7 @@ if(isset($_SESSION["user_id"])){
 
     $insertPayment = "INSERT INTO tbl_receipt (user_id, order_id, receipt_number, deposit_amount, uploaded_date) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($insertPayment);
-    $stmt->bind_param("iisss", $user_id, $lastId, $ref_number, $depositAmount, $date);
+    $stmt->bind_param("iisss", $user_id, $lastId, $ref_number, $depositAmount, $date_transaction);
     $stmt->execute();
 
     $updateCart = "UPDATE cart SET status_id = 4 WHERE user_id = ? AND checkbox = 1 AND status_id = 6";

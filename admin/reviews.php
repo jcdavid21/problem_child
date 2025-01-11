@@ -90,7 +90,7 @@ require_once("../config/dbcon.php");
                                   <div class="modal-body">
                                   <form method="post">
                                     
-                                      <label class="col-form-label fw-bolder">Image Receipt:</label>
+                                      <label class="col-form-label fw-bolder">Review Comment:</label>
                                       <div class="img-con" style="display: flex; justify-content: center;">
                                         <textarea class="form-control" name="fd_comment" id="fd_comment" disabled><?php echo $data["fd_comment"] ?></textarea>
                                       </div>
@@ -98,7 +98,7 @@ require_once("../config/dbcon.php");
                                       
                                     </form>
                                     <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary " value="<?php echo $data["receipt_id"]; ?>" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary " value="<?php echo $data["fd_id"]; ?>" data-bs-dismiss="modal">Close</button>
                                   </div>
                                   </div>
                                 </div>

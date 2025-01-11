@@ -67,13 +67,18 @@ $(document).ready(function(){
             success: function (response) {
                 try {
                     const responseData = JSON.parse(response);
-                    var newTotalPrice = parseFloat(responseData.newPrice);
+                    
+                    if(responseData.status === 'error'){
+                        quantityInput.val(quantity - 1);
+                    }else{
+                        var newTotalPrice = parseFloat(responseData.newPrice);
 
-                    if (!isNaN(newTotalPrice)) {
-                        $('#price' + cartId + ' .price').text(newTotalPrice.toFixed(2));
-                        updateTotalPrice();
-                    } else {
-                        console.error("Invalid newPrice in response:", response);
+                        if (!isNaN(newTotalPrice)) {
+                            $('#price' + cartId + ' .price').text(newTotalPrice.toFixed(2));
+                            updateTotalPrice();
+                        } else {
+                            console.error("Invalid newPrice in response:", response);
+                        }
                     }
                 } catch (e) {
                     console.error("Error parsing JSON:", e, response);
