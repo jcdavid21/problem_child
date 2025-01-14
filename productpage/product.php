@@ -5,6 +5,7 @@ include('../config/dbcon.php');
 
 $product_id = $_GET['product_id'];
 
+
 // Fetch product details
 $query = "SELECT product_id, product_name, product_image, price FROM product WHERE product_id = $product_id";
 $result = mysqli_query($conn, $query);
@@ -718,13 +719,6 @@ if (!$variation_id) {
         document.getElementById("variationId").value = variationId;
         }
 
-        document.querySelector(".btn_add").addEventListener("click", function (event) {
-            // Ensure that a size has been selected before submitting the form
-            if (document.getElementById("selectedSize").value === "") {
-                event.preventDefault();
-                alert("Please select a size before adding to cart.");
-            }
-        });
     </script>
 
     <script>

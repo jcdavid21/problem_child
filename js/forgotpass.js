@@ -123,7 +123,7 @@ $(document).ready(function () {
                             text: 'Your password has been successfully reset!',
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href = 'login.php';
+                                window.location.href = '../login/login.php';
                             }
                         }); 
                        

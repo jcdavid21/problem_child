@@ -11,9 +11,11 @@
         $user_id = $_POST["user_id"];
         $order_id = $_POST["order_id"];
 
-        $selectOrders = "SELECT * FROM tbl_orders WHERE order_id = ?";
+        $selectOrders = "SELECT o.* FROM tbl_orders o
+         INNER JOIN cart c ON o.cart_id = c.cart_id
+         WHERE o.order_id = ? AND c.status_id = ?";
         $stmt = $conn->prepare($selectOrders);
-        $stmt->bind_param("i", $order_id);
+        $stmt->bind_param("ii", $order_id, $current_status);
         $stmt->execute();
         $result = $stmt->get_result();
 

@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start();
 include('../config/dbcon.php');
 ?>
 
@@ -592,6 +593,8 @@ include('../config/dbcon.php');
                     $errors[] = "Error preparing statement: " . mysqli_error($conn);
                 }
             }
+
+            ob_end_flush();
         }
 
         // Handle address deletion
@@ -622,6 +625,8 @@ include('../config/dbcon.php');
             } else {
                 $errors[] = "Address ID is missing.";
             }
+
+            ob_end_flush();
         }
 
         // Your existing code for fetching and displaying addresses
@@ -681,7 +686,8 @@ include('../config/dbcon.php');
                         <div class="content">
                             <h2 class="new-address">New address</h2>
                             <input class="first-box" type="text" name="full_name" id="full_name" placeholder="Full Name">
-                            <input class="second-box" type="text" name="phone_number" id="phone_number" placeholder="Phone Number">
+                            <input class="second-box" type="text" name="phone_number" id="phone_number" placeholder="Phone Number" maxlength="11"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
                             <input class="input-box" type="text" name="address_region" id="address_region" placeholder="Region, Province, City, Barangay">
                             <input class="input-box" type="text" name="postal_code" id="postal_code" placeholder="Postal Code">
                             <input class="input-box" type="text" name="street_name" id="street_name" placeholder="Street Name, Building, House No.">
@@ -705,11 +711,11 @@ include('../config/dbcon.php');
                         <form method="post" action="update_address.php">
                             <div class="content">
                                 <h2 class="new-address">Edit My address</h2>
-                                <input class="first-box" type="text" name="full_name_edit" id="full_name_edit" placeholder="<?php echo htmlspecialchars($row['full_name']); ?>">
-                                <input class="second-box" type="text" name="phone_number_edit" id="phone_number_edit" placeholder="<?php echo htmlspecialchars($row['phone_number']); ?>">
-                                <input class="input-box" type="text" name="address_region_edit" id="address_region_edit" placeholder="<?php echo htmlspecialchars($row['address_region']); ?>">
-                                <input class="input-box" type="text" name="postal_code_edit" id="postal_code_edit" placeholder="<?php echo htmlspecialchars($row['postal_code']); ?>">
-                                <input class="input-box" type="text" name="street_name_edit" id="street_name_edit" placeholder="<?php echo htmlspecialchars($row['street_name']); ?>">
+                                <input class="first-box" type="text" name="full_name_edit" id="full_name_edit" placeholder="">
+                                <input class="second-box" type="text" name="phone_number_edit" id="phone_number_edit" placeholder="" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                                <input class="input-box" type="text" name="address_region_edit" id="address_region_edit" placeholder="">
+                                <input class="input-box" type="text" name="postal_code_edit" id="postal_code_edit" placeholder="">
+                                <input class="input-box" type="text" name="street_name_edit" id="street_name_edit" placeholder="">
                                 <div class="buttons">
                                     <button class="close-btn" onclick="cancelEdit(event)">CANCEL</button>
                                     <button class="submit-btn" name="update_address" onclick="submitEditForm()">Update</button>

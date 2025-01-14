@@ -1,17 +1,27 @@
 <?php 
     session_start();
     include("../../config/dbcon.php");
+    $user_id = $_SESSION["user_id"];
+
+    if(empty($user_id)){
+        echo json_encode(["status" => "error", "message" => "Please log in first."]);
+        exit;
+    }
 
     if(isset($_POST["product_id"]) && isset($_POST["size_id"]) && isset($_POST["price"]) && isset($_POST["quantity"])){
         $product_id = $_POST["product_id"];
         $size_id = $_POST["size_id"];
         $quantity = $_POST["quantity"];
-        $user_id = $_SESSION["user_id"];
         $price = $_POST["price"];
         $total_price = $price * $quantity;
 
-        if(empty($user_id)){
-            echo json_encode(["status" => "error", "message" => "Please log in first."]);
+        if($quantity <= 0){
+            echo json_encode(["status" => "error", "message" => "Quantity must be greater than 0"]);
+            exit;
+        }
+
+        if($size_id == '' || $size_id == null){
+            echo json_encode(["status" => "error", "message" => "Please select a size"]);
             exit;
         }
 
