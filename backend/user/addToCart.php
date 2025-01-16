@@ -8,6 +8,11 @@
         exit;
     }
 
+    if(empty($_POST["size_id"])){
+        echo json_encode(["status" => "error", "message" => "Please select a size"]);
+        exit;
+    }
+
     if(isset($_POST["product_id"]) && isset($_POST["size_id"]) && isset($_POST["price"]) && isset($_POST["quantity"])){
         $product_id = $_POST["product_id"];
         $size_id = $_POST["size_id"];
@@ -17,11 +22,6 @@
 
         if($quantity <= 0){
             echo json_encode(["status" => "error", "message" => "Quantity must be greater than 0"]);
-            exit;
-        }
-
-        if($size_id == '' || $size_id == null){
-            echo json_encode(["status" => "error", "message" => "Please select a size"]);
             exit;
         }
 

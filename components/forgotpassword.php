@@ -282,7 +282,7 @@ if (!empty($_SESSION["login"])) {
                 display: none;
             }
             .menu-button{
-                display: block;
+                display: block !important;
             }
         }
         @media(max-width: 1170){

@@ -6,7 +6,7 @@ $(document).ready(() => {
         const price = $('#price').val();
         const quantity = $('#quantityInput').val();
 
-        
+        console.log(product_id, size_id, price, quantity);
 
         $.ajax({
             url: "../backend/user/addToCart.php",

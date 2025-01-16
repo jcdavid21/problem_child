@@ -260,7 +260,7 @@ require_once("../config/dbcon.php");
 <!-- Include DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-
+    <script src="../assets/js/off-canvas.js"></script>
     <!-- Initialize DataTables -->
     <script>
         $(document).ready(function () {

@@ -22,6 +22,11 @@
             align-items: center;
             font-size: 12px;
         }
+        @media (max-width: 399px) {
+    nav .name {
+        font-size: 25px;
+    }
+}
     </style>
 </head>
 <body>

@@ -267,7 +267,8 @@ if (!empty($_SESSION["login"])) {
         }
 
         /* MEDIA QUERIES */
-        @media(max-width: 1344){
+         /* MEDIA QUERIES */
+         @media(max-width: 1344){
           nav .box:hover input{
             width: 130px;
           }
@@ -280,7 +281,7 @@ if (!empty($_SESSION["login"])) {
                 display: none;
             }
             .menu-button{
-                display: block;
+                display: block !important;
             }
         }
         @media(max-width: 1170){
@@ -319,11 +320,31 @@ if (!empty($_SESSION["login"])) {
             }
         }
 
+        @media (max-width: 1000px) {
+            .w3-row-padding{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .w3-row-padding .w3-third{
+                width: 100%;
+            }
+
+            .body-title{
+                font-size: 35px;
+                padding: 20px;
+            }
+        }
+
         #searchFormDesktop button, #searchFormMobile button{
             background: transparent;
             border: none;
             cursor: pointer;
         }
+
+        
          
     </style>
     <script src="https://kit.fontawesome.com/e8e1132798.js" crossorigin="anonymous"></script>

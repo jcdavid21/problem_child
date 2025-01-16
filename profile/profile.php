@@ -413,7 +413,7 @@ $date_of_birth = $userData["date_of_birth"];
                 display: none;
             }
             .menu-button{
-                display: block;
+                display: block !important;
             }
         }
         @media(max-width: 1170){

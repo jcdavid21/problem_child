@@ -245,7 +245,7 @@ require_once("../config/dbcon.php");
 
     <!-- DataTables Buttons CSS -->
     <link rel="stylesheet" href="../styles/dataTables.min.css">
-
+    <script src="../assets/js/off-canvas.js"></script>
     <!-- DataTables Buttons JavaScript -->
     <script src="../scripts/dataTables.js"></script>
     <script src="../scripts/ajax.make.min.js"></script>

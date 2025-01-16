@@ -168,7 +168,7 @@ require_once("../config/dbcon.php");
                 display: none;
             }
             .menu-button{
-                display: block;
+                display: block !important;
             }
         }
         @media(max-width: 1170){
@@ -207,7 +207,6 @@ require_once("../config/dbcon.php");
             }
         }
 
-         
     </style>
     <script src="https://kit.fontawesome.com/e8e1132798.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>

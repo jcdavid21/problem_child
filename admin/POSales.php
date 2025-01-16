@@ -54,7 +54,7 @@ require_once("../config/dbcon.php");
                             <p class="card-title text-white">POS Orders
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                       <table id="productTable" class="table table-striped nowrap" style="width:100%">
                         <thead>
                           <tr>
@@ -253,7 +253,7 @@ require_once("../config/dbcon.php");
             input.value = input.value.toLowerCase();
         }
     </script>
-
+<script src="../assets/js/off-canvas.js"></script>
 <script src="../jquery/cancelOrder.js"></script>
 
     <script src="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>

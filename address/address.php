@@ -430,7 +430,7 @@ include('../config/dbcon.php');
                 display: none;
             }
             .menu-button{
-                display: block;
+                display: block !important;
             }
         }
         @media(max-width: 1170){
@@ -450,6 +450,22 @@ include('../config/dbcon.php');
             }
             .logo2 img{
                 margin-left: 80px;
+            }
+
+            .popup .content{
+                width: 100%;
+            }
+
+            .popup .content .input-box{
+                width: 100%;
+            }
+
+            .popup .content .buttons{
+                margin: 20px 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
             }
         }
         @media(max-width: 500px){

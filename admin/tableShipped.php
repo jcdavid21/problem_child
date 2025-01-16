@@ -259,7 +259,7 @@ require_once("../config/dbcon.php");
             input.value = input.value.toLowerCase();
         }
     </script>
-
+<script src="../assets/js/off-canvas.js"></script>
 <script src="../jquery/cancelOrder.js"></script>
 
     <script src="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>

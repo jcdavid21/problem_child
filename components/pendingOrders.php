@@ -121,7 +121,7 @@ if (!isset($_SESSION['user_id'])) {
                 display: none;
             }
             .menu-button{
-                display: block;
+                display: block !important;
             }
         }
         @media(max-width: 1170){

@@ -183,6 +183,8 @@ require_once("../config/dbcon.php");
       });
 </script>
 
+
+<script src="../assets/js/off-canvas.js"></script>
 <script src="../jquery/cancelOrder.js"></script>
 
 <!-- Include DataTables JS -->
@@ -203,7 +205,6 @@ require_once("../config/dbcon.php");
             });
         });
     </script>
-
 
 
   </body>
