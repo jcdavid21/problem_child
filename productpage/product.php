@@ -5,6 +5,11 @@ include('../config/dbcon.php');
 
 $product_id = $_GET['product_id'];
 
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'] ?? null;
+}else{
+    $user_id = 0;
+}
 
 // Fetch product details
 $query = "SELECT product_id, product_name, product_image, price FROM product WHERE product_id = $product_id";
@@ -527,6 +532,7 @@ if (!$variation_id) {
             <input type="hidden" name="variationId" id="variationId" value="<?php echo $variation_id; ?>">
             <input type="hidden" name="price" id="price" value="<?php echo $price; ?>">
             <input type="hidden" name="quantity" id="quantityInput" value="1">
+            <input type="hidden" name="user_id" id="user_id" value="<?php echo $user_id; ?>">
             <div class="image_container">
                 <div class="image_box">
                     <img class="main_image" src="../admin_panel/<?php echo $productImage; ?>" alt="Main Image">
@@ -648,6 +654,8 @@ if (!$variation_id) {
             
         </div>
     </div>
+
+
 
     <script>
         document.querySelector(".minus-btn").setAttribute("disabled", "disabled");

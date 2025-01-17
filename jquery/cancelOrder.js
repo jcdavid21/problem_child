@@ -1,8 +1,8 @@
 $(document).ready(()=>{
-    $(".delete-js").on("click", function(){
+    $(".cancelOrder").on("click", function(){
         const prodId = $(this).attr("id");
         Swal.fire({
-            title: "Are you sure you want to cancel this item?",
+            title: "Are you sure you want to cancel this order?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "Yes",

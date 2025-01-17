@@ -278,7 +278,7 @@ if (!isset($_SESSION['user_id'])) {
                                     ?>
                                     <th>Status</th>
                                     <?php 
-                                        if ($status_id[0] == 4) {
+                                        if ($status_id[0] == 4 || $status_id[0] == 1) {
                                     ?>
                                     <th>Action</th>
                                     <?php } ?>
@@ -357,6 +357,11 @@ if (!isset($_SESSION['user_id'])) {
                                             Review
                                         </button>
                                      </td>
+                                    <?php }else if ($status_id[0] == 1){ ?>
+                                    <td>
+                                        <button style="font-size: 14px;" class="btn btn-danger cancelOrder" data-cart-id="<?php echo $data["cart_id"] ?>"
+                                        id="<?php echo $data["cart_id"] ?>">Cancel Order</button>
+                                    </td>
                                     <?php } ?>
                                 </tr>
                                 <!-- Modal -->
@@ -452,5 +457,6 @@ if (!isset($_SESSION['user_id'])) {
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="../jquery/submitReview.js"></script>
+    <script src="../jquery/cancelOrder.js"></script>
 </body>
 </html>

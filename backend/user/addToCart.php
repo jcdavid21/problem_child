@@ -1,9 +1,8 @@
 <?php 
     session_start();
     include("../../config/dbcon.php");
-    $user_id = $_SESSION["user_id"];
 
-    if(empty($user_id)){
+    if(empty($_SESSION["user_id"])){
         echo json_encode(["status" => "error", "message" => "Please log in first."]);
         exit;
     }
@@ -19,6 +18,7 @@
         $quantity = $_POST["quantity"];
         $price = $_POST["price"];
         $total_price = $price * $quantity;
+        $user_id = $_SESSION["user_id"];
 
         if($quantity <= 0){
             echo json_encode(["status" => "error", "message" => "Quantity must be greater than 0"]);

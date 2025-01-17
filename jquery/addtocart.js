@@ -5,8 +5,37 @@ $(document).ready(() => {
         const size_id = $('.size_box.selected').data('size-id');
         const price = $('#price').val();
         const quantity = $('#quantityInput').val();
+        const user_id = $('#user_id').val();
 
-        console.log(product_id, size_id, price, quantity);
+        if(user_id == 0){
+            Swal.fire({
+                title: "Error!",
+                text: "Please login first before adding to cart.",
+                icon: "error",
+                confirmButtonColor: "#3085d6",
+                customClass: {
+                    title: 'default-font',
+                    htmlContainer: 'default-font',
+                    confirmButton: 'default-font'
+                }
+            });
+            return;
+        }
+
+        if(size_id == undefined){
+            Swal.fire({
+                title: "Error!",
+                text: "Please select a size.",
+                icon: "error",
+                confirmButtonColor: "#3085d6",
+                customClass: {
+                    title: 'default-font',
+                    htmlContainer: 'default-font',
+                    confirmButton: 'default-font'
+                }
+            });
+            return;
+        }
 
         $.ajax({
             url: "../backend/user/addToCart.php",
